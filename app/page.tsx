@@ -20,6 +20,7 @@ import { getNowSection } from "@/sanity/services/now";
 import { getFeaturedRepositories } from "@/sanity/services/repository";
 import { getSkills } from "@/sanity/services/skills";
 import { getStats } from "@/sanity/services/stats";
+import { getUses } from "@/sanity/services/uses";
 
 export default async function Home() {
 
@@ -31,6 +32,7 @@ export default async function Home() {
   const skills = await getSkills();
   const featuredProjects = await getFeaturedProjects();
   const repositories = await getFeaturedRepositories();
+  const uses = await getUses();
 
 
   return (
@@ -43,7 +45,7 @@ export default async function Home() {
       <Skills data={skills} />
       <FeaturedProjects data={featuredProjects} />
       <FeaturedRepositories data={repositories} />
-      <UsesSection />
+      <UsesSection data={uses} />
       <LearningJourney />
       <Timeline />
       <LatestBlogs />
