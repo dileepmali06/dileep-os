@@ -56,8 +56,16 @@ export const BLOGS_QUERY = groq`
 `;
 
 export const FEATURED_BLOGS_QUERY = groq`
-  *[_type == "blog" && featured == true]
-  | order(publishedAt desc)
+*[_type == "blog" && featured == true]
+| order(publishedAt desc)[0...3]{
+  title,
+  slug,
+  excerpt,
+  category,
+  featured,
+  publishedAt,
+  readingTime
+}
 `;
 
 export const BLOG_BY_SLUG_QUERY = groq`
@@ -109,8 +117,15 @@ export const STACK_EVOLUTION_QUERY = groq`
 `;
 
 export const TIMELINE_QUERY = groq`
-  *[_type == "timeline"]
-  | order(date desc)
+*[_type == "timeline"]
+| order(date asc){
+  _id,
+  title,
+  date,
+  type,
+  highlight,
+  description
+}
 `;
 
 export const BOOKS_QUERY = groq`
@@ -191,8 +206,15 @@ export const CHANGELOG_QUERY = groq`
 ============================================================ */
 
 export const TESTIMONIALS_QUERY = groq`
-  *[_type == "testimonial"]
-  | order(_createdAt desc)
+*[_type == "testimonial" && featured == true]
+| order(_createdAt desc)[0...3]{
+  _id,
+  name,
+  position,
+  company,
+  message,
+  avatar
+}
 `;
 
 export const GUESTBOOK_QUERY = groq`

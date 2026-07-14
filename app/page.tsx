@@ -14,6 +14,7 @@ import { Timeline } from "@/components/sections/timeline";
 import { UsesSection } from "@/components/sections/uses";
 import { getAbout } from "@/sanity/services/about";
 import { getFeaturedAchievements } from "@/sanity/services/achievement";
+import { getFeaturedBlogs } from "@/sanity/services/blog";
 import { getFeaturedProjects } from "@/sanity/services/featuredProjects";
 import { getHomepageSettings } from "@/sanity/services/homepage";
 import { getLearningLogs } from "@/sanity/services/learning";
@@ -21,6 +22,8 @@ import { getNowSection } from "@/sanity/services/now";
 import { getFeaturedRepositories } from "@/sanity/services/repository";
 import { getSkills } from "@/sanity/services/skills";
 import { getStats } from "@/sanity/services/stats";
+import { getTestimonials } from "@/sanity/services/testimonial";
+import { getTimeline } from "@/sanity/services/timeline";
 import { getUses } from "@/sanity/services/uses";
 
 export default async function Home() {
@@ -35,7 +38,9 @@ export default async function Home() {
   const repositories = await getFeaturedRepositories();
   const uses = await getUses();
   const learningLogs = await getLearningLogs();
-
+  const timeline = await getTimeline();
+  const featuredBlogs = await getFeaturedBlogs();
+  const testimonials = await getTestimonials();
 
   return (
     <>
@@ -49,11 +54,10 @@ export default async function Home() {
       <FeaturedRepositories data={repositories} />
       <UsesSection data={uses} />
       <LearningJourney data={learningLogs} />
-      <Timeline />
-      <LatestBlogs />
-      <Testimonials />
-      {/* <ContactCTA /> */}
-
+      <Timeline data={timeline} />
+      <LatestBlogs data={featuredBlogs} />
+      <Testimonials data={testimonials} />
+      <ContactCTA />
     </>
   );
 }

@@ -1,46 +1,24 @@
 "use client";
 
-import { GitCommit, GitBranchPlus } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { ChevronDown, GitBranchPlus, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "../ui/SectionHeading";
 
-const timelineItems = [
-  {
-    hash: "a3f9c21",
-    year: "2021",
-    title: "Started Coding Journey",
-    description:
-      "Started exploring programming fundamentals and web development.",
-    color: "var(--yellow)",
-  },
-  {
-    hash: "e71bd08",
-    year: "2023",
-    title: "Entered Full Stack Development",
-    description:
-      "Learned React, Node.js and started building real-world projects.",
-    color: "var(--blue)",
-  },
-  {
-    hash: "c4d82f1",
-    year: "2024",
-    title: "Built Production Projects",
-    description:
-      "Worked on client projects and improved full stack engineering skills.",
-    color: "var(--green)",
-  },
-  {
-    hash: "f0a67e9",
-    year: "2025",
-    title: "Java + DSA + System Design",
-    description:
-      "Currently focusing on backend engineering and scalable systems.",
-    color: "var(--pink)",
-    current: true,
-  },
-];
+type TimelineItem = {
+  _id: string;
+  title: string;
+  description: PortableTextBlock[];
+  date: string;
+  highlight?: boolean;
+  type?: string;
+};
+
+const colors = ["var(--yellow)", "var(--blue)", "var(--green)", "var(--pink)"];
 
 const future = {
   title: "Software Engineer",
@@ -48,7 +26,23 @@ const future = {
     "Building expertise in distributed systems, architecture and backend engineering.",
 };
 
-export function Timeline() {
+export function Timeline({ data }: { data: TimelineItem[] }) {
+  const defaultOpen = data?.find((d) => d.highlight)?._id ?? data?.[0]?._id;
+  const [openIds, setOpenIds] = useState<Set<string>>(
+    new Set(defaultOpen ? [defaultOpen] : [])
+  );
+
+  if (!data?.length) return null;
+
+  const toggle = (id: string) => {
+    setOpenIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
   return (
     <section className="section-padding">
       <Container>
@@ -59,98 +53,114 @@ export function Timeline() {
           align="center"
         />
 
-        <div className="mx-auto mt-16 max-w-3xl overflow-hidden rounded-[24px] border-[4px] border-black shadow-[10px_10px_0px_#000]">
-          {/* terminal title bar */}
-          <div className="flex items-center gap-3 border-b-[3px] border-black bg-neutral-100 px-5 py-3">
-            <div className="flex gap-1.5">
-              <span className="h-3 w-3 rounded-full border border-black/40 bg-red-500" />
-              <span className="h-3 w-3 rounded-full border border-black/40 bg-yellow-400" />
-              <span className="h-3 w-3 rounded-full border border-black/40 bg-green-500" />
-            </div>
-            <span className="font-mono text-xs font-semibold text-neutral-600">
-              git log --graph --oneline
-            </span>
-          </div>
+        <div className="relative mx-auto mt-16 max-w-2xl">
+          {/* spine */}
+          <div className="absolute left-[19px] top-2 bottom-2 w-[3px] bg-black/10" />
+          <motion.div
+            className="absolute left-[19px] top-2 w-[3px] origin-top bg-black"
+            initial={{ height: 0 }}
+            whileInView={{ height: "calc(100% - 1rem)" }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          />
 
-          {/* commit graph */}
-          <div className="relative bg-neutral-900 px-6 py-10 sm:px-10">
-            {/* branch line */}
-            <div className="absolute left-[38px] top-10 bottom-10 w-[2px] bg-white/15 sm:left-[58px]" />
-            <motion.div
-              className="absolute left-[38px] top-10 w-[2px] origin-top bg-white/70 sm:left-[58px]"
-              initial={{ height: 0 }}
-              whileInView={{ height: "calc(100% - 5rem)" }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: "easeInOut" }}
-            />
+          <div className="space-y-3">
+            {data.map((item, index) => {
+              const color = colors[index % colors.length];
+              const isOpen = openIds.has(item._id);
+              const year = new Date(item.date).getFullYear();
+              const month = new Date(item.date).toLocaleDateString("en-US", {
+                month: "short",
+              });
 
-            <div className="space-y-9">
-              {timelineItems.map((item, index) => (
+              return (
                 <motion.div
-                  key={item.hash}
-                  initial={{ opacity: 0, x: -16 }}
+                  key={item._id}
+                  initial={{ opacity: 0, x: -12 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.12 }}
-                  className="relative flex gap-4 pl-2 sm:gap-6"
+                  transition={{ duration: 0.35, delay: index * 0.05 }}
+                  className="relative pl-12"
                 >
-                  <div
-                    className="relative z-10 mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-[3px] border-black"
-                    style={{ background: item.color }}
+                  {/* node */}
+                  <span
+                    className="absolute left-0 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-black text-[10px] font-bold"
+                    style={{ background: color }}
                   >
-                    <GitCommit size={11} className="text-black" />
-                  </div>
+                    {String(year).slice(2)}
+                  </span>
 
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
-                      <span className="text-emerald-400">{item.hash}</span>
-                      <span className="text-white/40">·</span>
-                      <span className="text-white/50">{item.year}</span>
-                      {item.current && (
-                        <span className="rounded-full border border-white/30 bg-white/10 px-2 py-0.5 text-[10px] text-white/70">
-                          HEAD -&gt; main
-                        </span>
+                  <div className="overflow-hidden rounded-2xl border-[3px] border-black bg-white shadow-[5px_5px_0px_#000]">
+                    <button
+                      onClick={() => toggle(item._id)}
+                      className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-neutral-50"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-mono text-xs text-neutral-400">
+                            {month} {year}
+                          </span>
+                          {item.highlight && (
+                            <span className="flex items-center gap-1 rounded-full border-[2px] border-black bg-[var(--yellow)] px-2 py-0.5 text-[10px] font-semibold">
+                              <Sparkles size={10} />
+                              Highlight
+                            </span>
+                          )}
+                          {item.type && (
+                            <span className="rounded-full border-[2px] border-black/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-neutral-400">
+                              {item.type}
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="mt-1 truncate font-heading text-lg font-black sm:text-xl">
+                          {item.title}
+                        </h3>
+                      </div>
+
+                      <motion.span
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="shrink-0 rounded-full border-[2px] border-black p-1"
+                      >
+                        <ChevronDown size={16} />
+                      </motion.span>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25, ease: "easeInOut" }}
+                          className="overflow-hidden border-t-[3px] border-black bg-neutral-50"
+                        >
+                          <div className="px-5 py-4 text-sm leading-relaxed text-neutral-600 sm:text-base">
+                            <PortableText value={item.description} />
+                          </div>
+                        </motion.div>
                       )}
-                    </div>
-
-                    <h3 className="mt-2 font-heading text-xl font-bold text-white sm:text-2xl">
-                      {item.title}
-                    </h3>
-
-                    <p className="mt-1.5 text-sm leading-relaxed text-white/60 sm:text-base">
-                      {item.description}
-                    </p>
+                    </AnimatePresence>
                   </div>
                 </motion.div>
-              ))}
+              );
+            })}
 
-              {/* uncommitted / future entry */}
-              <motion.div
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: timelineItems.length * 0.12 }}
-                className="relative flex gap-4 pl-2 sm:gap-6"
-              >
-                <div className="relative z-10 mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-[3px] border-dashed border-white/40 bg-transparent">
-                  <GitBranchPlus size={11} className="text-white/50" />
-                </div>
+            {/* future entry */}
+            <div className="relative pl-12">
+              <span className="absolute left-0 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-dashed border-black/40 bg-white">
+                <GitBranchPlus size={16} className="text-black/40" />
+              </span>
 
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 font-mono text-xs text-white/40">
-                    <span>working-tree —</span>
-                    <span className="inline-block h-3 w-[6px] animate-pulse bg-white/50 align-middle" />
-                  </div>
-
-                  <h3 className="mt-2 font-heading text-xl font-bold text-white/70 sm:text-2xl">
-                    {future.title}
-                  </h3>
-
-                  <p className="mt-1.5 text-sm leading-relaxed text-white/40 sm:text-base">
-                    {future.description}
-                  </p>
-                </div>
-              </motion.div>
+              <div className="rounded-2xl border-[3px] border-dashed border-black/30 px-5 py-4">
+                <span className="font-mono text-xs text-neutral-300">next</span>
+                <h3 className="mt-1 font-heading text-lg font-black text-black/40 sm:text-xl">
+                  {future.title}
+                </h3>
+                <p className="mt-1 text-sm text-neutral-400">
+                  {future.description}
+                </p>
+              </div>
             </div>
           </div>
         </div>
