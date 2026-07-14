@@ -27,3 +27,31 @@ export async function getBlogs() {
     }
   `);
 }
+
+export async function getBlogBySlug(
+  slug: string
+) {
+  return client.fetch(
+    `
+    *[
+      _type == "blog" &&
+      slug.current == $slug
+    ][0]{
+      _id,
+      title,
+      slug,
+      coverImage,
+      excerpt,
+      content,
+      category,
+      tags,
+      publishedAt,
+      readingTime,
+      featured
+    }
+    `,
+    {
+      slug,
+    }
+  );
+}
