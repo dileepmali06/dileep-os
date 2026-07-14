@@ -6,3 +6,24 @@ export async function getFeaturedBlogs() {
     FEATURED_BLOGS_QUERY
   );
 }
+
+export async function getBlogs() {
+  return client.fetch(`
+    *[
+      _type == "blog"
+    ] | order(
+      publishedAt desc
+    ){
+      _id,
+      title,
+      slug,
+      excerpt,
+      coverImage,
+      category,
+      tags,
+      publishedAt,
+      featured,
+      readingTime
+    }
+  `);
+}

@@ -103,9 +103,9 @@ export default function RootLayout({
       `}
     >
       <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] antialiased">
-        <Navbar />
+        {/* <Navbar /> */}
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
