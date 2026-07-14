@@ -65,7 +65,7 @@ export function FeaturedRepositories() {
           align="center"
         />
 
-        <div className="mx-auto mt-16 max-w-3xl overflow-hidden rounded-2xl border-[4px] border-black shadow-[10px_10px_0px_#000]">
+        <div className="mx-auto mt-16 max-w-3xl overflow-hidden rounded-2xl border-4 border-black shadow-[10px_10px_0px_#000]">
           {/* browser-style chrome */}
           <div className="flex items-center gap-3 border-b-[3px] border-black bg-neutral-100 px-5 py-3">
             <div className="flex gap-1.5">
@@ -73,7 +73,7 @@ export function FeaturedRepositories() {
               <span className="h-3 w-3 rounded-full border border-black/40 bg-yellow-400" />
               <span className="h-3 w-3 rounded-full border border-black/40 bg-green-500" />
             </div>
-            <div className="flex flex-1 items-center gap-2 rounded-md border-[2px] border-black bg-white px-3 py-1 font-mono text-xs text-neutral-500">
+            <div className="flex flex-1 items-center gap-2 rounded-md border-2 border-black bg-white px-3 py-1 font-mono text-xs text-neutral-500">
               <BookMarked size={12} />
               github.com/dileepmali06
             </div>
