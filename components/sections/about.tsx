@@ -6,32 +6,69 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "../ui/SectionHeading";
 
-export function AboutPreview() {
+interface AboutData {
+  headline?: string;
+  shortBio?: string;
+  currentFocus?: string[];
+  location?: string;
+  openToWork?: boolean;
+  role?: string;
+  yearsOfExperience?: number;
+}
+
+interface AboutPreviewProps {
+  data: AboutData;
+}
+
+const badgeVariants = [
+  "default",
+  "secondary",
+  "success",
+  "danger",
+] as const;
+
+export function AboutPreview({
+  data,
+}: AboutPreviewProps) {
   return (
     <section className="section-padding">
       <Container>
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
 
-          {/* Left Side */}
+          {/* Left */}
           <div className="space-y-6">
             <SectionHeading
               eyebrow="About"
-              title="Building software and learning in public."
-              description="I enjoy building products, solving problems and documenting my journey as I grow from a MERN developer into a software engineer."
+              title={
+                data?.headline ||
+                "Building software and learning in public."
+              }
+              description={data?.shortBio}
             />
 
             <p className="text-lg leading-relaxed text-neutral-700">
-              Currently pursuing MCA while exploring
-              Java, DSA, Spring Boot, System Design and
-              scalable backend architecture.
+              {data?.shortBio}
             </p>
 
             <div className="flex flex-wrap gap-2">
-              <Badge>Java</Badge>
-              <Badge variant="secondary">DSA</Badge>
-              <Badge variant="success">Spring Boot</Badge>
-              <Badge variant="danger">System Design</Badge>
-              <Badge variant="outline">Next.js</Badge>
+              {data?.currentFocus?.map(
+                (
+                  skill,
+                  index
+                ) => (
+                  <Badge
+                    key={skill}
+                    variant={
+                      badgeVariants[
+                        index %
+                          badgeVariants.length
+                      ]
+                    }
+                  >
+                    {skill}
+                  </Badge>
+                )
+              )}
             </div>
 
             <Link href="/about">
@@ -41,7 +78,7 @@ export function AboutPreview() {
             </Link>
           </div>
 
-          {/* Right Side */}
+          {/* Right */}
           <Card className="p-8">
             <div className="grid gap-6 sm:grid-cols-2">
 
@@ -51,7 +88,7 @@ export function AboutPreview() {
                 </p>
 
                 <h3 className="font-heading text-2xl">
-                  India
+                  {data?.location || "India"}
                 </h3>
               </div>
 
@@ -61,32 +98,35 @@ export function AboutPreview() {
                 </p>
 
                 <h3 className="font-heading text-2xl">
-                  Open To Work
+                  {data?.openToWork
+                    ? "Open To Work"
+                    : "Unavailable"}
                 </h3>
               </div>
 
               <div>
                 <p className="text-sm text-neutral-500">
-                  Education
+                  Role
                 </p>
 
                 <h3 className="font-heading text-2xl">
-                  MCA
+                  {data?.role}
                 </h3>
               </div>
 
               <div>
                 <p className="text-sm text-neutral-500">
-                  Focus
+                  Experience
                 </p>
 
                 <h3 className="font-heading text-2xl">
-                  Backend Engineering
+                  {data?.yearsOfExperience || 0}+ Years
                 </h3>
               </div>
 
             </div>
           </Card>
+
         </div>
       </Container>
     </section>

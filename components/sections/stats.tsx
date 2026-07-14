@@ -1,26 +1,40 @@
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
 
-const stats = [
-  {
-    value: "20+",
-    label: "Projects Built",
-  },
-  {
-    value: "2+",
-    label: "Years Learning",
-  },
-  {
-    value: "100+",
-    label: "DSA Problems Goal",
-  },
-  {
-    value: "10+",
-    label: "Courses & Certifications",
-  },
-];
+interface StatsProps {
+  data: {
+    projectsBuilt?: number;
+    yearsLearning?: number;
+    leetcodeProblemsSolved?: number;
+    coursesCompleted?: number;
+  };
+}
 
-export function Stats() {
+export function Stats({ data }: StatsProps) {
+
+  // console.log("Data", data)
+  const stats = [
+    {
+      value: `${data.projectsBuilt ?? 0}+`,
+      label: "Projects Built",
+    },
+
+    {
+      value: `${data.yearsLearning ?? 0}+`,
+      label: "Years Learning",
+    },
+
+    {
+      value: `${data.leetcodeProblemsSolved ?? 0}+`,
+      label: "DSA Problems Solved",
+    },
+
+    {
+      value: `${data.coursesCompleted ?? 0}+`,
+      label: "Courses & Certifications",
+    },
+  ];
+
   return (
     <section className="pb-24">
       <Container>
@@ -28,7 +42,15 @@ export function Stats() {
           {stats.map((stat) => (
             <Card
               key={stat.label}
-              className="p-8 text-center hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[10px_10px_0px_#000]"
+              className="
+                p-8
+                text-center
+                transition-all
+                duration-200
+                hover:-translate-x-1
+                hover:-translate-y-1
+                hover:shadow-[10px_10px_0px_#000]
+              "
             >
               <div className="space-y-3">
                 <h2 className="font-heading text-5xl font-black">

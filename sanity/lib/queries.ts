@@ -4,9 +4,6 @@ import { groq } from "next-sanity";
    SINGLETON DOCUMENTS
 ============================================================ */
 
-export const SITE_SETTINGS_QUERY = groq`
-  *[_type == "siteSettings"][0]
-`;
 
 export const ABOUT_QUERY = groq`
   *[_type == "about"][0]
@@ -199,35 +196,43 @@ export const EVENTS_QUERY = groq`
 /* ============================================================
    HOMEPAGE COMBINED QUERY
 ============================================================ */
-
 export const HOME_PAGE_QUERY = groq`
-{
-  "siteSettings": *[_type == "siteSettings"][0],
-  "about": *[_type == "about"][0],
-  "homepageSettings": *[_type == "homepageSettings"][0],
-  "skills": *[_type == "skills"][0],
-  "stats": *[_type == "stats"][0],
-  "now": *[_type == "now"][0],
+*[_type == "homepageSettings"][0]{
+  heroName,
+  heroEmoji,
+  heroTitle,
+  heroSubtitle,
+  heroBadge,
+  isAvailable,
 
-  "featuredProjects": *[
-    _type == "project" &&
-    featured == true
-  ][0...6],
+  heroImage,
 
-  "latestBlogs": *[
-    _type == "blog"
-  ] | order(publishedAt desc)[0...3],
+  heroRoles,
+  terminalLines,
+  floatingTags,
+  focusTechnologies,
 
-  "goals": *[
-    _type == "goal"
-  ][0...5],
+  primaryButtonText,
+  primaryButtonLink,
 
-  "achievements": *[
-    _type == "achievement"
-  ][0...6],
+  secondaryButtonText,
+  secondaryButtonLink,
 
-  "timeline": *[
-    _type == "timeline"
-  ] | order(date desc)[0...5]
+  projectsCount,
+  coursesCount,
+  blogsCount,
+
+  footerTitle,
+  footerSubtitle,
+  footerBadge,
+
+  featuredProjectsCount,
+  featuredBlogsCount,
+  featuredDsaCount,
+
+  showGithubStats,
+  showLeetcodeStats,
+  showTimeline,
+  showBlogSection
 }
 `;

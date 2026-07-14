@@ -6,23 +6,25 @@ import {
 } from "next/font/google";
 
 import "./globals.css";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-   weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-   weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-heading",
   subsets: ["latin"],
-   weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -95,13 +97,15 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       className={`
-        // ${geistSans.variable}
-        // ${geistMono.variable}
-        // ${spaceGrotesk.variable}
+        ${geistSans.variable}
+        ${geistMono.variable}
+        ${spaceGrotesk.variable}
       `}
     >
       <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] antialiased">
+        {/* <Navbar /> */}
         {children}
+        {/* <Footer /> */}
       </body>
     </html>
   );

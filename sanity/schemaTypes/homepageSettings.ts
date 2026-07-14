@@ -6,6 +6,25 @@ export const homepageSettings = defineType({
   type: "document",
 
   fields: [
+    // =====================================================
+    // HERO SECTION
+    // =====================================================
+
+    defineField({
+      name: "heroName",
+      title: "Hero Name",
+      type: "string",
+      initialValue: "Dileep",
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: "heroEmoji",
+      title: "Hero Emoji",
+      type: "string",
+      initialValue: "👋",
+    }),
+
     defineField({
       name: "heroTitle",
       title: "Hero Title",
@@ -17,13 +36,21 @@ export const homepageSettings = defineType({
       name: "heroSubtitle",
       title: "Hero Subtitle",
       type: "text",
-      rows: 3,
+      rows: 4,
     }),
 
     defineField({
       name: "heroBadge",
       title: "Hero Badge",
       type: "string",
+      initialValue: "Available for opportunities",
+    }),
+
+    defineField({
+      name: "isAvailable",
+      title: "Available for Opportunities",
+      type: "boolean",
+      initialValue: true,
     }),
 
     defineField({
@@ -34,6 +61,82 @@ export const homepageSettings = defineType({
         hotspot: true,
       },
     }),
+
+    // =====================================================
+    // ROTATING ROLES
+    // =====================================================
+
+    defineField({
+      name: "heroRoles",
+      title: "Hero Roles",
+      type: "array",
+      of: [{ type: "string" }],
+      initialValue: [
+        "Full Stack Developer",
+        "Backend Engineer in the making",
+        "DSA Practitioner",
+        "Problem Solver",
+      ],
+    }),
+
+    // =====================================================
+    // TERMINAL
+    // =====================================================
+
+    defineField({
+      name: "terminalLines",
+      title: "Terminal Lines",
+      type: "array",
+      of: [{ type: "string" }],
+      initialValue: [
+        "$ whoami",
+        "Dileep — Full Stack Developer",
+        "",
+        "$ cat focus.json",
+        '{ "learning": ["Java", "DSA", "System Design"] }',
+        "",
+        "$ status --check",
+        "✓ Available for new opportunities",
+      ],
+    }),
+
+    // =====================================================
+    // FLOATING TECH TAGS
+    // =====================================================
+
+    defineField({
+      name: "floatingTags",
+      title: "Floating Tags",
+      type: "array",
+      of: [{ type: "string" }],
+      initialValue: [
+        "React",
+        "Node.js",
+        "Next.js",
+        "Java",
+      ],
+    }),
+
+    // =====================================================
+    // CURRENT FOCUS
+    // =====================================================
+
+    defineField({
+      name: "focusTechnologies",
+      title: "Focus Technologies",
+      type: "array",
+      of: [{ type: "string" }],
+      initialValue: [
+        "Java",
+        "DSA",
+        "Spring Boot",
+        "System Design",
+      ],
+    }),
+
+    // =====================================================
+    // BUTTONS
+    // =====================================================
 
     defineField({
       name: "primaryButtonText",
@@ -62,6 +165,60 @@ export const homepageSettings = defineType({
       type: "string",
       initialValue: "/resume",
     }),
+
+    // =====================================================
+    // HERO STATS
+    // =====================================================
+
+    defineField({
+      name: "projectsCount",
+      title: "Projects Count",
+      type: "number",
+      initialValue: 20,
+    }),
+
+    defineField({
+      name: "coursesCount",
+      title: "Courses Count",
+      type: "number",
+      initialValue: 10,
+    }),
+
+    defineField({
+      name: "blogsCount",
+      title: "Blogs Count",
+      type: "number",
+      initialValue: 5,
+    }),
+
+    // =====================================================
+    // TERMINAL FOOTER
+    // =====================================================
+
+    defineField({
+      name: "footerTitle",
+      title: "Footer Title",
+      type: "string",
+      initialValue: "Dileep OS",
+    }),
+
+    defineField({
+      name: "footerSubtitle",
+      title: "Footer Subtitle",
+      type: "string",
+      initialValue: "MERN Developer • MCA Student • Builder",
+    }),
+
+    defineField({
+      name: "footerBadge",
+      title: "Footer Badge",
+      type: "string",
+      initialValue: "Open To Work",
+    }),
+
+    // =====================================================
+    // HOMEPAGE CONFIGURATION
+    // =====================================================
 
     defineField({
       name: "featuredProjectsCount",
