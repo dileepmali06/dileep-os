@@ -34,12 +34,20 @@ export const STATS_QUERY = groq`
 ============================================================ */
 
 export const PROJECTS_QUERY = groq`
-  *[_type == "project"] | order(_createdAt desc)
-`;
-
-export const FEATURED_PROJECTS_QUERY = groq`
-  *[_type == "project" && featured == true]
-  | order(order asc)
+*[_type == "project"]
+| order(year desc){
+  _id,
+  title,
+  slug,
+  shortDescription,
+  coverImage,
+  techStack,
+  githubUrl,
+  liveUrl,
+  featured,
+  status,
+  year
+}
 `;
 
 export const PROJECT_BY_SLUG_QUERY = groq`
