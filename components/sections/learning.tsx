@@ -1,6 +1,10 @@
 "use client";
 
-import { CheckCircle2, Lock, Sparkles } from "lucide-react";
+import {
+  CheckCircle2,
+  Lock,
+  Sparkles,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/container";
@@ -9,57 +13,92 @@ import { Badge } from "@/components/ui/badge";
 
 type Status = "done" | "current" | "locked";
 
-const learningJourney: {
-  year: string;
+type LearningLog = {
+  _id: string;
   title: string;
-  description: string;
-  tags: string[];
-  color: string;
-  status: Status;
-}[] = [
-  {
-    year: "2023",
-    title: "Frontend Development",
-    description: "Started my journey with HTML, CSS, JavaScript and React.",
-    tags: ["HTML", "CSS", "JavaScript", "React"],
-    color: "var(--yellow)",
-    status: "done",
-  },
-  {
-    year: "2024",
-    title: "Full Stack Development",
-    description: "Learned MERN Stack and started building real-world projects.",
-    tags: ["MongoDB", "Express", "React", "Node.js"],
-    color: "var(--blue)",
-    status: "done",
-  },
-  {
-    year: "2025",
-    title: "Backend Engineering",
-    description:
-      "Currently focused on Java, DSA, Spring Boot and System Design.",
-    tags: ["Java", "DSA", "Spring Boot", "System Design"],
-    color: "var(--green)",
-    status: "current",
-  },
-  {
-    year: "Future",
-    title: "Scalable Systems",
-    description:
-      "Building expertise in distributed systems and backend architecture.",
-    tags: ["Microservices", "Cloud", "Distributed Systems"],
-    color: "var(--pink)",
-    status: "locked",
-  },
-];
-
-const statusMeta: Record<Status, { label: string; icon: typeof CheckCircle2 }> = {
-  done: { label: "Completed", icon: CheckCircle2 },
-  current: { label: "In Progress", icon: Sparkles },
-  locked: { label: "Upcoming", icon: Lock },
+  summary: string;
+  keyTakeaways: string[];
+  category: string;
+  date: string;
+  difficulty: "easy" | "medium" | "hard";
+  favorite: boolean;
 };
 
-export function LearningJourney() {
+const statusMeta: Record<
+  Status,
+  {
+    label: string;
+    icon: typeof CheckCircle2;
+  }
+> = {
+  done: {
+    label: "Completed",
+    icon: CheckCircle2,
+  },
+
+  current: {
+    label: "In Progress",
+    icon: Sparkles,
+  },
+
+  locked: {
+    label: "Upcoming",
+    icon: Lock,
+  },
+};
+
+export function LearningJourney({
+  data,
+}: {
+  data: LearningLog[];
+}) {
+  const learningJourney = [
+    ...data.map((item) => ({
+      year: new Date(item.date)
+        .getFullYear()
+        .toString(),
+
+      title: item.title,
+
+      description: item.summary,
+
+      tags: item.keyTakeaways,
+
+      color:
+        item.category === "frontend"
+          ? "var(--yellow)"
+          : item.category === "backend"
+            ? "var(--blue)"
+            : item.category === "java"
+              ? "var(--green)"
+              : "var(--pink)",
+
+      status: item.favorite
+        ? ("current" as Status)
+        : ("done" as Status),
+    })),
+
+    {
+      year: "Future",
+
+      title: "Scalable Systems",
+
+      description:
+        "Building expertise in distributed systems, cloud architecture, microservices and high-scale backend systems.",
+
+      tags: [
+        "Microservices",
+        "Cloud",
+        "Distributed Systems",
+        "Kubernetes",
+      ],
+
+      color: "var(--pink)",
+
+      status: "locked" as Status,
+    },
+  ];
+
   return (
     <section className="section-padding overflow-hidden">
       <Container>
@@ -71,44 +110,77 @@ export function LearningJourney() {
         />
 
         <div className="relative mt-24">
-          {/* ---------- Spine line ---------- */}
+          {/* Timeline Line */}
           <div className="absolute left-6 top-0 h-full w-1 md:left-1/2 md:-translate-x-1/2">
             <div className="h-full w-full rounded-full border-2 border-dashed border-black/25" />
+
             <motion.div
               className="absolute left-0 top-0 w-full origin-top rounded-full bg-black"
               style={{ width: "100%" }}
               initial={{ height: "0%" }}
-              whileInView={{ height: "68%" }}
+              whileInView={{ height: "75%" }}
               viewport={{ once: true }}
-              transition={{ duration: 1.1, ease: "easeInOut" }}
+              transition={{
+                duration: 1.2,
+                ease: "easeInOut",
+              }}
             />
           </div>
 
           <div className="space-y-14 md:space-y-6">
             {learningJourney.map((item, index) => {
-              const isRight = index % 2 === 1;
-              const meta = statusMeta[item.status];
-              const StatusIcon = meta.icon;
-              const isLocked = item.status === "locked";
+              const isRight =
+                index % 2 === 1;
+
+              const meta =
+                statusMeta[
+                  item.status
+                ];
+
+              const StatusIcon =
+                meta.icon;
+
+              const isLocked =
+                item.status ===
+                "locked";
 
               return (
                 <div
-                  key={item.year}
+                  key={`${item.title}-${index}`}
                   className={`relative flex items-start md:items-center ${
-                    isRight ? "md:flex-row-reverse" : "md:flex-row"
+                    isRight
+                      ? "md:flex-row-reverse"
+                      : "md:flex-row"
                   }`}
                 >
-                  {/* node on spine */}
+                  {/* Timeline Node */}
                   <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    initial={{
+                      scale: 0,
+                      opacity: 0,
+                    }}
+                    whileInView={{
+                      scale: 1,
+                      opacity: 1,
+                    }}
+                    viewport={{
+                      once: true,
+                    }}
+                    transition={{
+                      duration: 0.4,
+                      delay:
+                        index * 0.1,
+                    }}
                     className={`absolute left-6 z-10 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border-[3px] border-black text-xs font-black md:left-1/2 ${
-                      isLocked ? "bg-white opacity-60" : ""
+                      isLocked
+                        ? "bg-white opacity-60"
+                        : ""
                     }`}
                     style={{
-                      background: isLocked ? undefined : item.color,
+                      background:
+                        isLocked
+                          ? undefined
+                          : item.color,
                     }}
                   >
                     {isLocked ? (
@@ -118,17 +190,33 @@ export function LearningJourney() {
                     )}
                   </motion.div>
 
-                  {/* spacer for desktop alternating layout */}
                   <div className="hidden md:block md:w-1/2" />
 
-                  {/* card */}
+                  {/* Card */}
                   <motion.div
-                    initial={{ opacity: 0, x: isRight ? 40 : -40 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.1 }}
+                    initial={{
+                      opacity: 0,
+                      x: isRight
+                        ? 40
+                        : -40,
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      x: 0,
+                    }}
+                    viewport={{
+                      once: true,
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      delay:
+                        index * 0.1 +
+                        0.1,
+                    }}
                     className={`ml-16 w-full md:ml-0 md:w-1/2 ${
-                      isRight ? "md:pr-12" : "md:pl-12"
+                      isRight
+                        ? "md:pr-12"
+                        : "md:pl-12"
                     }`}
                   >
                     <div
@@ -142,11 +230,14 @@ export function LearningJourney() {
                         <span className="font-mono text-sm font-bold tracking-tight">
                           {item.year}
                         </span>
+
                         <span
                           className={`inline-flex items-center gap-1 rounded-full border-[2px] border-black px-2.5 py-0.5 text-[11px] font-semibold ${
-                            item.status === "done"
+                            item.status ===
+                            "done"
                               ? "bg-[var(--green)]"
-                              : item.status === "current"
+                              : item.status ===
+                                  "current"
                                 ? "bg-[var(--yellow)]"
                                 : "bg-neutral-100"
                           }`}
@@ -165,11 +256,33 @@ export function LearningJourney() {
                       </p>
 
                       <div className="mt-5 flex flex-wrap gap-2">
-                        {item.tags.map((tag) => (
-                          <Badge key={tag} variant="outline">
-                            {tag}
-                          </Badge>
-                        ))}
+                        {item.tags.map(
+                          (
+                            tag,
+                            tagIndex
+                          ) => (
+                            <Badge
+                              key={tag}
+                              variant={
+                                tagIndex %
+                                  4 ===
+                                0
+                                  ? undefined
+                                  : tagIndex %
+                                        4 ===
+                                      1
+                                    ? "secondary"
+                                    : tagIndex %
+                                          4 ===
+                                        2
+                                      ? "success"
+                                      : "danger"
+                              }
+                            >
+                              {tag}
+                            </Badge>
+                          )
+                        )}
                       </div>
                     </div>
                   </motion.div>

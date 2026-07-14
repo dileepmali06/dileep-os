@@ -69,8 +69,20 @@ export const BLOG_BY_SLUG_QUERY = groq`
 ============================================================ */
 
 export const LEARNING_LOGS_QUERY = groq`
-  *[_type == "learningLog"]
-  | order(date desc)
+*[
+  _type == "learningLog"
+]
+| order(date asc){
+  _id,
+  title,
+  date,
+  category,
+  summary,
+  keyTakeaways,
+  favorite,
+  difficulty,
+  resources
+}
 `;
 
 export const DSA_PROBLEMS_QUERY = groq`
