@@ -17,6 +17,7 @@ import { getFeaturedAchievements } from "@/sanity/services/achievement";
 import { getFeaturedProjects } from "@/sanity/services/featuredProjects";
 import { getHomepageSettings } from "@/sanity/services/homepage";
 import { getNowSection } from "@/sanity/services/now";
+import { getFeaturedRepositories } from "@/sanity/services/repository";
 import { getSkills } from "@/sanity/services/skills";
 import { getStats } from "@/sanity/services/stats";
 
@@ -29,8 +30,7 @@ export default async function Home() {
   const about = await getAbout();
   const skills = await getSkills();
   const featuredProjects = await getFeaturedProjects();
-  console.log("Featured Projects", featuredProjects)
-
+  const repositories = await getFeaturedRepositories();
 
 
   return (
@@ -42,7 +42,7 @@ export default async function Home() {
       <AboutPreview data={about} />
       <Skills data={skills} />
       <FeaturedProjects data={featuredProjects} />
-      <FeaturedRepositories />
+      <FeaturedRepositories data={repositories} />
       <UsesSection />
       <LearningJourney />
       <Timeline />
