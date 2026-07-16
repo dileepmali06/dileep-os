@@ -8,6 +8,7 @@ import {
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { LayoutWrapper } from "@/components/layout/layout-wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -103,9 +104,9 @@ export default function RootLayout({
       `}
     >
       <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] antialiased">
-        {/* <Navbar /> */}
-        {children}
-        {/* <Footer /> */}
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   );
