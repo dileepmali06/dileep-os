@@ -29,6 +29,8 @@ import { readingList } from './readingList'
 import { resumeVersion } from './resumeVersion'
 import { recommendation } from './recommendation'
 import { event } from './event'
+import { coreValue } from './core-value'
+import { funFact } from './funFact'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [siteSettings,
@@ -60,7 +62,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     readingList,
     resumeVersion,
     recommendation,
-    event
+    event,
+    coreValue,
+    funFact
 
   ],
 }

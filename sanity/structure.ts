@@ -33,6 +33,8 @@ import {
   Cpu,
   Folder,
   Users,
+  Heart,
+  Sparkles,
 } from "lucide-react";
 
 export const structure: StructureResolver = (S) =>
@@ -149,6 +151,14 @@ export const structure: StructureResolver = (S) =>
               S.documentTypeListItem("course")
                 .title("Courses")
                 .icon(BookOpen),
+
+              S.documentTypeListItem("coreValue")
+                .title("Core Values")
+                .icon(Heart),
+
+              S.documentTypeListItem("funFact")
+                .title("Fun Facts")
+                .icon(Sparkles),
 
               S.documentTypeListItem("resumeVersion")
                 .title("Resume Versions")
