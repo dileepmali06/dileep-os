@@ -1,6 +1,14 @@
 import { client } from "../lib/client";
-import { NOW_QUERY } from "../queries/now";
+import { nowQuery } from "../queries/now";
 
 export async function getNowSection() {
-  return client.fetch(NOW_QUERY);
+  return await client.fetch(
+    nowQuery,
+    {},
+    {
+      next: {
+        revalidate: 60,
+      },
+    }
+  );
 }

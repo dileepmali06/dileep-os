@@ -1,16 +1,31 @@
 import { groq } from "next-sanity";
 
-export const NOW_QUERY = groq`
-*[_type == "now"][0]{
-  sectionTitle,
-  sectionDescription,
-  updatedAt,
+export const nowQuery = groq`
+  *[_type == "now"][0]{
+    _id,
 
-  tracks[]{
-    title,
-    color,
-    icon,
-    items
+    sectionTitle,
+    sectionDescription,
+    heroDescription,
+
+    tracks[] {
+      title,
+      color,
+      icon,
+      items
+    },
+
+    currentGoals,
+    currentlyBuilding,
+    currentlyLearning,
+
+    reading,
+    watching,
+
+    currentStack,
+
+    lifeUpdate,
+
+    updatedAt
   }
-}
 `;

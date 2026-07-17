@@ -12,6 +12,7 @@ import {
   Newspaper,
   Wrench,
   Mail,
+  Clock,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -23,6 +24,7 @@ const navItems = [
   { title: "Projects", href: "/projects", icon: FolderGit2 },
   { title: "Learning", href: "/learning", icon: BookOpen },
   { title: "Blog", href: "/blog", icon: Newspaper },
+  { title: "Now", href: "/now", icon: Clock },
   { title: "Uses", href: "/uses", icon: Wrench },
   { title: "Contact", href: "/contact", icon: Mail },
 ];
