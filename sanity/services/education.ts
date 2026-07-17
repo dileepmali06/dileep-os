@@ -6,13 +6,25 @@ import {
 } from "../queries/education";
 
 export async function getEducation() {
-  return await client.fetch(
-    EDUCATION_QUERY
+  return client.fetch(
+    EDUCATION_QUERY,
+    {},
+    {
+      next: {
+        revalidate: 60,
+      },
+    }
   );
 }
 
 export async function getFeaturedEducation() {
-  return await client.fetch(
-    FEATURED_EDUCATION_QUERY
+  return client.fetch(
+    FEATURED_EDUCATION_QUERY,
+    {},
+    {
+      next: {
+        revalidate: 60,
+      },
+    }
   );
 }

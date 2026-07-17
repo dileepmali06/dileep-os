@@ -129,10 +129,17 @@ export const TIMELINE_QUERY = groq`
 | order(date asc){
   _id,
   title,
+  slug,
   date,
   type,
   highlight,
-  description
+  description,
+  image{
+    asset->{
+      _id,
+      url
+    }
+  }
 }
 `;
 
@@ -173,11 +180,6 @@ export const CERTIFICATES_QUERY = groq`
 export const ACHIEVEMENTS_QUERY = groq`
   *[_type == "achievement"]
   | order(achievementDate desc)
-`;
-
-export const GOALS_QUERY = groq`
-  *[_type == "goal"]
-  | order(priority asc)
 `;
 
 export const RESUME_VERSIONS_QUERY = groq`

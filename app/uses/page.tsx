@@ -10,32 +10,16 @@ import { getUses } from "@/sanity/services/uses";
 
 export default async function UsesPage() {
   const uses = await getUses();
+
   return (
     <>
       <UsesHero />
       <HardwareSection data={uses.hardware} />
-      <SoftwareSection
-        data={uses.software}
-      />
-
-      <EditorSection
-        editor={uses.editor}
-        extensions={uses.extensions}
-      />
-
-      <WorkflowSection
-        browser={uses.browser}
-        terminal={uses.terminal}
-      />
-
-      <AIToolsSection
-        data={uses.aiTools}
-      />
-
-      <ProductivityToolsSection
-        data={uses.productivityTools}
-      />
-
+      <SoftwareSection data={uses.software} />
+      <EditorSection editor={uses.editor} extensions={uses.extensions} />
+      <WorkflowSection browser={uses.browser} terminal={uses.terminal} />
+      <AIToolsSection data={uses.aiTools} />
+      <ProductivityToolsSection data={uses.productivityTools} />
       <ContactCTA />
     </>
   );
