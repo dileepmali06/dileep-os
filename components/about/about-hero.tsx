@@ -86,9 +86,9 @@ export function AboutHero({
               {data.name}
             </h1>
 
-            <div className="mt-4 flex items-center gap-2 text-xl text-neutral-600">
-              <Briefcase size={20} />
-              <span>{data.role}</span>
+            <div className="mt-4 inline-flex items-center gap-2.5 rounded-xl border-[2px] border-black bg-[var(--yellow)] px-4 py-2">
+              <Briefcase size={16} />
+              <span className="font-heading font-bold">{data.role}</span>
             </div>
 
             {data.headline && (

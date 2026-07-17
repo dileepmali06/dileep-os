@@ -17,67 +17,26 @@ import { getExperience } from "@/sanity/services/experience";
 import { getFunFacts } from "@/sanity/services/fun-fact";
 
 export default async function AboutPage() {
-    const about = await getAbout();
+  const about = await getAbout();
+  const education = await getEducation();
+  const experience = await getExperience();
+  const certificates = await getCertificates();
+  const courses = await getCourses();
+  const coreValues = await getCoreValues();
+  const funFacts = await getFunFacts();
 
-    const education =
-        await getEducation();
-
-    const experience =
-        await getExperience();
-
-    const certificates =
-        await getCertificates();
-
-    const courses =
-        await getCourses();
-
-    const coreValues =
-        await getCoreValues();
-
-    const funFacts =
-        await getFunFacts();
-
-    return (
-        <>
-            <AboutHero
-                data={about}
-            />
-
-            <AboutStory
-                data={about}
-            />
-
-            <AboutFocus
-                data={about}
-            />
-
-            <EducationSection
-                data={education}
-            />
-
-            <ExperienceSection
-                data={experience}
-            />
-
-            <CertificatesSection
-                data={
-                    certificates
-                }
-            />
-
-            <CoursesSection
-                data={courses}
-            />
-
-            <CoreValuesSection
-                data={coreValues}
-            />
-
-            <FunFacts
-                data={funFacts}
-            />
-
-            <ContactCTA />
-        </>
-    );
+  return (
+    <>
+      <AboutHero data={about} />
+      <AboutStory data={about} />
+      <AboutFocus data={about} />
+      <EducationSection data={education} />
+      <ExperienceSection data={experience} />
+      <CertificatesSection data={certificates} />
+      <CoursesSection data={courses} />
+      <CoreValuesSection data={coreValues} />
+      <FunFacts data={funFacts} />
+      <ContactCTA />
+    </>
+  );
 }

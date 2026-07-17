@@ -1,23 +1,16 @@
-import {
-  Coffee,
-  Code2,
-  BookOpen,
-  Rocket,
-  Moon,
-  Brain,
-} from "lucide-react";
+"use client";
+
+import { Coffee, Code2, BookOpen, Rocket, Moon, Brain } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const icons = [
-  Coffee,
-  Code2,
-  BookOpen,
-  Rocket,
-  Moon,
-  Brain,
-];
+const icons = [Coffee, Code2, BookOpen, Rocket, Moon, Brain];
+const colors = ["var(--yellow)", "var(--blue)", "var(--pink)", "var(--green)"];
+
+// deterministic tilts so notes look hand-pinned, not randomly jittery on every render
+const tilts = [-4, 3, -2, 5, -3, 2, -5, 4];
 
 interface FunFact {
   _id: string;
@@ -29,9 +22,7 @@ interface Props {
   data: FunFact[];
 }
 
-export function FunFacts({
-  data,
-}: Props) {
+export function FunFacts({ data }: Props) {
   if (!data?.length) {
     return null;
   }
@@ -39,7 +30,6 @@ export function FunFacts({
   return (
     <section className="section-padding">
       <Container>
-
         <SectionHeading
           eyebrow="Fun Facts"
           title="Beyond The Code"
@@ -47,37 +37,56 @@ export function FunFacts({
           align="center"
         />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          className="relative mt-16 overflow-hidden rounded-[28px] border-[4px] border-black p-8 sm:p-12"
+          style={{
+            background: "#e8dcc8",
+            backgroundImage:
+              "radial-gradient(rgba(0,0,0,0.08) 1px, transparent 1px)",
+            backgroundSize: "16px 16px",
+          }}
+        >
+          <div className="flex flex-wrap justify-center gap-8 sm:gap-10">
+            {data.map((fact, index) => {
+              const Icon = icons[index % icons.length];
+              const color = colors[index % colors.length];
+              const tilt = tilts[index % tilts.length];
 
-          {data.map((fact, index) => {
-            const Icon =
-              icons[
-                index %
-                  icons.length
-              ];
+              return (
+                <motion.div
+                  key={fact._id}
+                  initial={{ opacity: 0, y: 20, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: tilt }}
+                  whileHover={{ rotate: 0, y: -4, scale: 1.03 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.08 }}
+                  className="relative w-64 shrink-0 border-[3px] border-black bg-white p-6 shadow-[6px_6px_0px_#000]"
+                >
+                  {/* pin */}
+                  <span
+                    className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[2px] border-black"
+                    style={{ background: color }}
+                  />
 
-            return (
-              <div
-                key={fact._id}
-                className="rounded-2xl border-[3px] border-black bg-white p-6 shadow-[8px_8px_0px_#000]"
-              >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl border-[3px] border-black">
-                  <Icon size={24} />
-                </div>
+                  <div
+                    className="flex h-11 w-11 items-center justify-center rounded-lg border-[2px] border-black"
+                    style={{ background: color }}
+                  >
+                    <Icon size={20} />
+                  </div>
 
-                <h3 className="mt-5 font-heading text-2xl font-black">
-                  {fact.title}
-                </h3>
+                  <h3 className="mt-4 font-heading text-lg font-black leading-tight">
+                    {fact.title}
+                  </h3>
 
-                <p className="mt-3 leading-relaxed text-neutral-600">
-                  {fact.description}
-                </p>
-              </div>
-            );
-          })}
-
+                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">
+                    {fact.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
-
       </Container>
     </section>
   );
