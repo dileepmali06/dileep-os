@@ -1,19 +1,13 @@
-import {
-  Brain,
-  BookOpen,
-  GraduationCap,
-  Cpu,
-} from "lucide-react";
+"use client";
+
+import { Brain, BookOpen, GraduationCap, Cpu, type LucideIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const icons = [
-  Brain,
-  BookOpen,
-  GraduationCap,
-  Cpu,
-];
+const icons: LucideIcon[] = [Brain, BookOpen, GraduationCap, Cpu];
+const colors = ["var(--green)", "var(--blue)", "var(--pink)", "var(--yellow)"];
 
 interface CurrentlyLearningProps {
   data: {
@@ -21,10 +15,7 @@ interface CurrentlyLearningProps {
   };
 }
 
-export function CurrentlyLearning({
-  data,
-}: CurrentlyLearningProps) {
-
+export function CurrentlyLearning({ data }: CurrentlyLearningProps) {
   if (!data.currentlyLearning?.length) {
     return null;
   }
@@ -32,7 +23,6 @@ export function CurrentlyLearning({
   return (
     <section className="section-padding">
       <Container>
-
         <SectionHeading
           eyebrow="Learning"
           title="Currently Learning"
@@ -40,50 +30,50 @@ export function CurrentlyLearning({
           align="center"
         />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mx-auto mt-16 max-w-2xl overflow-hidden rounded-2xl border-[3px] border-black bg-white shadow-[8px_8px_0px_#000]">
+          {data.currentlyLearning.map((item, index) => {
+            const Icon = icons[index % icons.length];
+            const color = colors[index % colors.length];
 
-          {data.currentlyLearning.map(
-            (
-              item,
-              index
-            ) => {
-
-              const Icon =
-                icons[
-                  index %
-                  icons.length
-                ];
-
-              return (
+            return (
+              <motion.div
+                key={item}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: index * 0.06 }}
+                className={`flex items-center gap-4 px-6 py-4 transition-colors duration-200 hover:bg-neutral-50 sm:px-8 ${
+                  index !== 0 ? "border-t-[2px] border-black/10" : ""
+                }`}
+              >
                 <div
-                  key={item}
-                  className="group rounded-[24px] border-[4px] border-black bg-white p-8 shadow-[8px_8px_0px_#000] transition-all duration-300 hover:-translate-y-2 hover:shadow-[12px_12px_0px_#000]"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border-[2px] border-black"
+                  style={{ background: color }}
                 >
-
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border-[3px] border-black bg-[var(--green)]">
-                    <Icon size={30} />
-                  </div>
-
-                  <h3 className="mt-6 font-heading text-2xl font-black">
-                    {item}
-                  </h3>
-
-                  <p className="mt-4 leading-relaxed text-neutral-600">
-                    Currently studying and improving practical understanding through projects and experimentation.
-                  </p>
-
-                  <div className="mt-6 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-neutral-500">
-                    <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-[var(--green)]" />
-                    In Progress
-                  </div>
-
+                  <Icon size={18} />
                 </div>
-              );
-            }
-          )}
 
+                <span className="min-w-0 flex-1 font-heading text-lg font-bold leading-tight sm:text-xl">
+                  {item}
+                </span>
+
+                <span className="flex shrink-0 items-center gap-1.5 font-mono text-[10px] font-bold uppercase text-neutral-500">
+                  <span className="relative flex h-2 w-2">
+                    <span
+                      className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                      style={{ background: color }}
+                    />
+                    <span
+                      className="relative inline-flex h-2 w-2 rounded-full"
+                      style={{ background: color }}
+                    />
+                  </span>
+                  <span className="hidden sm:inline">In Progress</span>
+                </span>
+              </motion.div>
+            );
+          })}
         </div>
-
       </Container>
     </section>
   );
