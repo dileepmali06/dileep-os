@@ -10,38 +10,20 @@ import { NowStack } from "@/components/now/now-stack";
 import { LifeUpdate } from "@/components/now/life-update";
 import { LastUpdated } from "@/components/now/now-last-updated";
 
-
 export default async function NowPage() {
-    const now = await getNowSection();
+  const now = await getNowSection();
 
-    return (
-        <>
-            <NowHero data={now} />
-            <CurrentFocus
-                data={now}
-            />
-
-            <CurrentlyBuilding
-                data={now}
-            />
-
-            <CurrentlyLearning
-                data={now}
-            />
-
-            <CurrentGoals
-                data={now}
-            />
-
-            <ReadingWatching
-                data={now}
-            />
-
-            <NowStack data={now} />
-
-            <LifeUpdate data={now} />
-
-            <LastUpdated data={now} />
-        </>
-    );
+  return (
+    <>
+      <NowHero data={now} />
+      <CurrentFocus data={now} />
+      <CurrentlyBuilding data={now} />
+      <CurrentlyLearning data={now} />
+      <CurrentGoals data={now} />
+      <ReadingWatching data={now} />
+      <NowStack data={now} />
+      <LifeUpdate data={now} />
+      <LastUpdated data={now} />
+    </>
+  );
 }

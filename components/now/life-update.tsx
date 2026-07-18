@@ -1,4 +1,7 @@
-import { Quote, Sparkles } from "lucide-react";
+"use client";
+
+import { Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -9,10 +12,7 @@ interface LifeUpdateProps {
   };
 }
 
-export function LifeUpdate({
-  data,
-}: LifeUpdateProps) {
-
+export function LifeUpdate({ data }: LifeUpdateProps) {
   if (!data.lifeUpdate) {
     return null;
   }
@@ -20,7 +20,6 @@ export function LifeUpdate({
   return (
     <section className="section-padding bg-neutral-50">
       <Container>
-
         <SectionHeading
           eyebrow="Life Update"
           title="What's Going On Behind The Scenes"
@@ -28,35 +27,39 @@ export function LifeUpdate({
           align="center"
         />
 
-        <div className="mx-auto mt-16 max-w-4xl">
-
-          <div className="relative overflow-hidden rounded-[32px] border-[4px] border-black bg-[var(--yellow)] p-10 shadow-[12px_12px_0px_#000]">
-
-            <div className="absolute right-6 top-6 opacity-20">
-              <Quote size={80} />
-            </div>
-
-            <div className="relative z-10">
-
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl border-[3px] border-black bg-white">
-                <Sparkles size={30} />
-              </div>
-
-              <p className="mt-8 text-xl leading-relaxed text-neutral-800 sm:text-2xl">
-                {data.lifeUpdate}
+        <motion.div
+          initial={{ opacity: 0, y: 20, rotate: -1 }}
+          whileInView={{ opacity: 1, y: 0, rotate: -1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto mt-16 max-w-3xl overflow-hidden rounded-[20px] border-[4px] border-black bg-[#fdf8ec] shadow-[10px_10px_0px_#000]"
+        >
+          <div className="grid sm:grid-cols-[1fr_140px]">
+            {/* message side */}
+            <div className="p-8 sm:p-10">
+              <p className="font-heading text-xl italic leading-relaxed text-neutral-800 sm:text-2xl">
+                &ldquo;{data.lifeUpdate}&rdquo;
               </p>
-
-              <div className="mt-10 inline-flex items-center gap-2 rounded-full border-[3px] border-black bg-white px-4 py-2 font-mono text-sm font-bold shadow-[4px_4px_0px_#000]">
-                <div className="h-2.5 w-2.5 animate-pulse rounded-full bg-green-500" />
-                LIVE STATUS
-              </div>
-
+              <p className="mt-6 font-mono text-xs text-neutral-400">
+                — from my desk, right now
+              </p>
             </div>
 
+            {/* stamp side */}
+            <div className="flex flex-row items-center justify-center gap-4 border-t-[3px] border-dashed border-black/25 p-6 sm:flex-col sm:justify-start sm:border-l-[3px] sm:border-t-0 sm:pt-10">
+              <div className="flex h-16 w-14 shrink-0 rotate-3 items-center justify-center rounded-sm border-[3px] border-black bg-[var(--yellow)] shadow-[3px_3px_0px_#000]">
+                <Sparkles size={22} />
+              </div>
+
+              {/* decorative address lines */}
+              <div className="hidden w-full space-y-2 sm:block">
+                <div className="h-1.5 w-3/4 rounded-full bg-black/10" />
+                <div className="h-1.5 w-full rounded-full bg-black/10" />
+                <div className="h-1.5 w-1/2 rounded-full bg-black/10" />
+              </div>
+            </div>
           </div>
-
-        </div>
-
+        </motion.div>
       </Container>
     </section>
   );

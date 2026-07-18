@@ -1,4 +1,6 @@
-import { Code2, Layers } from "lucide-react";
+"use client";
+
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -9,9 +11,11 @@ interface NowStackProps {
   };
 }
 
-export function NowStack({
-  data,
-}: NowStackProps) {
+const colors = ["var(--green)", "var(--blue)", "var(--pink)", "var(--yellow)"];
+
+const rotations = ["-rotate-2", "rotate-1", "rotate-2", "-rotate-1", "rotate-3", "-rotate-3"];
+
+export function NowStack({ data }: NowStackProps) {
   if (!data.currentStack?.length) {
     return null;
   }
@@ -26,42 +30,48 @@ export function NowStack({
           align="center"
         />
 
-        <div className="mx-auto mt-16 max-w-5xl rounded-[28px] border-[4px] border-black bg-white p-8 shadow-[10px_10px_0px_#000]">
-          <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border-[3px] border-black bg-[var(--green)]">
-              <Code2 size={30} />
-            </div>
+        <div className="mx-auto mt-16 flex max-w-3xl flex-wrap items-center justify-center gap-4 sm:gap-5">
+          {data.currentStack.map((tech, index) => {
+            const color = colors[index % colors.length];
+            const rotation = rotations[index % rotations.length];
+            const isFeatured = index === 0;
 
-            <div>
-              <h3 className="font-heading text-3xl font-black">
-                Default Stack
-              </h3>
+            return (
+              <motion.div
+                key={tech}
+                initial={{ opacity: 0, scale: 0.85, y: 12 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: index * 0.06, type: "spring", bounce: 0.4 }}
+                whileHover={{ rotate: 0, scale: 1.06, y: -4 }}
+                className={`group relative flex items-center gap-2.5 rounded-2xl border-[3px] border-black bg-white px-5 py-3.5 shadow-[6px_6px_0px_#000] transition-shadow duration-200 hover:shadow-[8px_8px_0px_#000] ${rotation} ${
+                  isFeatured ? "sm:px-6 sm:py-4" : ""
+                }`}
+              >
+                <span
+                  className="h-2.5 w-2.5 shrink-0 rounded-full border-[2px] border-black"
+                  style={{ background: color }}
+                />
 
-              <p className="text-neutral-500">
-                Technologies I reach for first.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-10 flex flex-wrap gap-4">
-            {data.currentStack.map(
-              (tech) => (
-                <div
-                  key={tech}
-                  className="flex items-center gap-3 rounded-2xl border-[3px] border-black bg-neutral-50 px-5 py-3 shadow-[4px_4px_0px_#000]"
+                <span
+                  className={`font-heading font-bold ${
+                    isFeatured ? "text-lg sm:text-xl" : "text-base sm:text-lg"
+                  }`}
                 >
-                  <Layers
-                    size={18}
-                    className="text-neutral-500"
-                  />
+                  {tech}
+                </span>
 
-                  <span className="font-semibold">
-                    {tech}
+                {isFeatured && (
+                  <span
+                    className="absolute -right-2 -top-3 rotate-6 rounded-full border-[2px] border-black px-2 py-0.5 text-[9px] font-bold text-black shadow-[2px_2px_0px_#000]"
+                    style={{ background: color }}
+                  >
+                    most used
                   </span>
-                </div>
-              )
-            )}
-          </div>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
       </Container>
     </section>

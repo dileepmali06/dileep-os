@@ -1,7 +1,7 @@
-import {
-  BookOpen,
-  PlayCircle,
-} from "lucide-react";
+"use client";
+
+import { BookOpen, PlayCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -13,27 +13,21 @@ interface ReadingWatchingProps {
   };
 }
 
-export function ReadingWatching({
-  data,
-}: ReadingWatchingProps) {
+const readingTape = ["var(--yellow)", "var(--green)", "var(--pink)"];
+const watchingTape = ["var(--blue)", "var(--pink)", "var(--yellow)"];
+const rotations = ["-rotate-2", "rotate-1", "-rotate-1", "rotate-2", "-rotate-3", "rotate-3"];
 
-  const hasReading =
-    data.reading?.length;
+export function ReadingWatching({ data }: ReadingWatchingProps) {
+  const hasReading = !!data.reading?.length;
+  const hasWatching = !!data.watching?.length;
 
-  const hasWatching =
-    data.watching?.length;
-
-  if (
-    !hasReading &&
-    !hasWatching
-  ) {
+  if (!hasReading && !hasWatching) {
     return null;
   }
 
   return (
     <section className="section-padding bg-neutral-50">
       <Container>
-
         <SectionHeading
           eyebrow="Learning Resources"
           title="Reading & Watching"
@@ -41,82 +35,109 @@ export function ReadingWatching({
           align="center"
         />
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
-
-          {/* Reading */}
+        <div className="mx-auto mt-16 grid max-w-5xl gap-10 md:grid-cols-2 md:gap-8">
+          {/* reading pinboard */}
           {hasReading && (
-            <div className="rounded-[28px] border-[4px] border-black bg-white p-8 shadow-[10px_10px_0px_#000]">
-
-              <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border-[3px] border-black bg-[var(--yellow)]">
-                  <BookOpen size={30} />
+            <div>
+              <div className="mb-6 flex items-center gap-3.5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-[3px] border-black bg-[var(--yellow)] shadow-[4px_4px_0px_#000]">
+                  <BookOpen size={20} />
                 </div>
-
                 <div>
-                  <h3 className="font-heading text-3xl font-black">
-                    Reading
-                  </h3>
-
-                  <p className="text-neutral-500">
-                    Books and articles
+                  <h3 className="font-heading text-xl font-black">Reading List</h3>
+                  <p className="font-mono text-xs text-neutral-400">
+                    {data.reading?.length} book{data.reading!.length > 1 ? "s" : ""}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-8 space-y-4">
-                {data.reading?.map(
-                  (item) => (
-                    <div
-                      key={item}
-                      className="rounded-xl border-[3px] border-black bg-neutral-50 p-4"
-                    >
-                      {item}
-                    </div>
-                  )
-                )}
-              </div>
+              <div className="rounded-[24px] border-[2px] border-dashed border-black/20 p-5 sm:p-6">
+                <div className="flex flex-col gap-4">
+                  {data.reading?.map((item, index) => {
+                    const tape = readingTape[index % readingTape.length];
+                    const rotation = rotations[index % rotations.length];
 
+                    return (
+                      <motion.div
+                        key={item}
+                        initial={{ opacity: 0, y: 14, scale: 0.92 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.35, delay: index * 0.07, type: "spring", bounce: 0.35 }}
+                        whileHover={{ rotate: 0, scale: 1.03 }}
+                        className={`relative rounded-xl border-[3px] border-black bg-white px-5 py-4 shadow-[5px_5px_0px_#000] ${rotation}`}
+                      >
+                        <span
+                          className="absolute -top-2.5 left-6 h-4 w-10 rotate-[-4deg] border-[2px] border-black/80"
+                          style={{ background: tape }}
+                        />
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono text-xs text-neutral-300">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span className="text-sm font-semibold sm:text-base">
+                            {item}
+                          </span>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           )}
 
-          {/* Watching */}
+          {/* watching pinboard */}
           {hasWatching && (
-            <div className="rounded-[28px] border-[4px] border-black bg-white p-8 shadow-[10px_10px_0px_#000]">
-
-              <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border-[3px] border-black bg-[var(--blue)]">
-                  <PlayCircle size={30} />
+            <div>
+              <div className="mb-6 flex items-center gap-3.5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-[3px] border-black bg-[var(--blue)] shadow-[4px_4px_0px_#000]">
+                  <PlayCircle size={20} />
                 </div>
-
                 <div>
-                  <h3 className="font-heading text-3xl font-black">
-                    Watching
-                  </h3>
-
-                  <p className="text-neutral-500">
-                    Videos and courses
+                  <h3 className="font-heading text-xl font-black">Watch Queue</h3>
+                  <p className="font-mono text-xs text-neutral-400">
+                    {data.watching?.length} title{data.watching!.length > 1 ? "s" : ""}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-8 space-y-4">
-                {data.watching?.map(
-                  (item) => (
-                    <div
-                      key={item}
-                      className="rounded-xl border-[3px] border-black bg-neutral-50 p-4"
-                    >
-                      {item}
-                    </div>
-                  )
-                )}
-              </div>
+              <div className="rounded-[24px] border-[2px] border-dashed border-black/20 p-5 sm:p-6">
+                <div className="flex flex-col gap-4">
+                  {data.watching?.map((item, index) => {
+                    const tape = watchingTape[index % watchingTape.length];
+                    const rotation = rotations[(index + 2) % rotations.length];
 
+                    return (
+                      <motion.div
+                        key={item}
+                        initial={{ opacity: 0, y: 14, scale: 0.92 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.35, delay: index * 0.07, type: "spring", bounce: 0.35 }}
+                        whileHover={{ rotate: 0, scale: 1.03 }}
+                        className={`relative rounded-xl border-[3px] border-black bg-white px-5 py-4 shadow-[5px_5px_0px_#000] ${rotation}`}
+                      >
+                        <span
+                          className="absolute -top-2.5 right-6 h-4 w-10 rotate-[4deg] border-[2px] border-black/80"
+                          style={{ background: tape }}
+                        />
+                        <div className="flex items-center gap-3">
+                          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[2px] border-black text-[9px] font-bold">
+                            {index + 1}
+                          </span>
+                          <span className="text-sm font-semibold sm:text-base">
+                            {item}
+                          </span>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           )}
-
         </div>
-
       </Container>
     </section>
   );

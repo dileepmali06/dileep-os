@@ -1,19 +1,12 @@
-import {
-  Code2,
-  BookOpen,
-  Rocket,
-  Target,
-} from "lucide-react";
+"use client";
+
+import { Code2, BookOpen, Rocket, Target } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const iconMap = {
-  Code2,
-  BookOpen,
-  Rocket,
-  Target,
-};
+const iconMap = { Code2, BookOpen, Rocket, Target };
 
 interface Track {
   title: string;
@@ -28,10 +21,7 @@ interface CurrentFocusProps {
   };
 }
 
-export function CurrentFocus({
-  data,
-}: CurrentFocusProps) {
-
+export function CurrentFocus({ data }: CurrentFocusProps) {
   if (!data?.tracks?.length) {
     return null;
   }
@@ -39,7 +29,6 @@ export function CurrentFocus({
   return (
     <section className="section-padding">
       <Container>
-
         <SectionHeading
           eyebrow="Current Focus"
           title="What Occupies My Attention"
@@ -48,79 +37,79 @@ export function CurrentFocus({
         />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-2">
+          {data.tracks.map((track, trackIndex) => {
+            const Icon = iconMap[track.icon] || Code2;
 
-          {data.tracks.map(
-            (track) => {
-
-              const Icon =
-                iconMap[
-                  track.icon
-                ] || Code2;
-
-              return (
+            return (
+              <motion.div
+                key={track.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: trackIndex * 0.1 }}
+                className="overflow-hidden rounded-[24px] border-[4px] border-black bg-white shadow-[10px_10px_0px_#000]"
+              >
+                {/* channel branding strip */}
                 <div
-                  key={track.title}
-                  className="rounded-[28px] border-[4px] border-black bg-white p-8 shadow-[10px_10px_0px_#000]"
-                >
+                  className="h-2.5 border-b-[3px] border-black"
+                  style={{ background: track.color }}
+                />
 
-                  <div className="flex items-center gap-5">
-
+                {/* channel header */}
+                <div className="flex items-center justify-between gap-4 border-b-[3px] border-black px-7 py-5">
+                  <div className="flex items-center gap-4">
                     <div
-                      className="flex h-16 w-16 items-center justify-center rounded-2xl border-[3px] border-black"
-                      style={{
-                        background:
-                          track.color,
-                      }}
+                      className="flex h-12 w-12 items-center justify-center rounded-xl border-[3px] border-black"
+                      style={{ background: track.color }}
                     >
-                      <Icon
-                        size={30}
-                      />
+                      <Icon size={22} />
                     </div>
-
                     <div>
-                      <h3 className="font-heading text-3xl font-black">
+                      <span className="font-mono text-[11px] font-bold text-neutral-400">
+                        CH-{String(trackIndex + 1).padStart(2, "0")}
+                      </span>
+                      <h3 className="font-heading text-2xl font-black leading-tight">
                         {track.title}
                       </h3>
-
-                      <p className="font-mono text-sm text-neutral-500">
-                        {track.items.length} active items
-                      </p>
                     </div>
-
                   </div>
 
-                  <div className="mt-8 space-y-3">
-
-                    {track.items.map(
-                      (item) => (
-                        <div
-                          key={item}
-                          className="flex items-center gap-3 rounded-xl border-[3px] border-black bg-neutral-50 px-5 py-4"
-                        >
-                          <div
-                            className="h-3 w-3 rounded-full border border-black"
-                            style={{
-                              background:
-                                track.color,
-                            }}
-                          />
-
-                          <span className="font-medium">
-                            {item}
-                          </span>
-                        </div>
-                      )
-                    )}
-
-                  </div>
-
+                  <span className="flex shrink-0 items-center gap-1.5 rounded-full border-[2px] border-black bg-black px-2.5 py-1 text-[10px] font-bold text-white">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
+                    </span>
+                    ON AIR
+                  </span>
                 </div>
-              );
-            }
-          )}
 
+                {/* program schedule */}
+                <div className="px-7 py-4">
+                  <p className="py-2 font-mono text-[10px] uppercase tracking-widest text-neutral-400">
+                    Now Airing · {track.items.length} segments
+                  </p>
+
+                  <div className="divide-y-[2px] divide-black/10">
+                    {track.items.map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-center gap-3 py-3.5"
+                      >
+                        <span
+                          className="h-2 w-2 shrink-0 rounded-full"
+                          style={{ background: track.color }}
+                        />
+                        <span className="font-medium text-neutral-800">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-
       </Container>
     </section>
   );

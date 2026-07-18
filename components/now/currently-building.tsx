@@ -1,17 +1,12 @@
-import {
-  Hammer,
-  Rocket,
-  FolderGit2,
-} from "lucide-react";
+"use client";
+
+import { Hammer, Rocket, FolderGit2, type LucideIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const icons = [
-  Hammer,
-  Rocket,
-  FolderGit2,
-];
+const icons: LucideIcon[] = [Hammer, Rocket, FolderGit2];
 
 interface CurrentlyBuildingProps {
   data: {
@@ -19,10 +14,7 @@ interface CurrentlyBuildingProps {
   };
 }
 
-export function CurrentlyBuilding({
-  data,
-}: CurrentlyBuildingProps) {
-
+export function CurrentlyBuilding({ data }: CurrentlyBuildingProps) {
   if (!data.currentlyBuilding?.length) {
     return null;
   }
@@ -30,7 +22,6 @@ export function CurrentlyBuilding({
   return (
     <section className="section-padding bg-neutral-50">
       <Container>
-
         <SectionHeading
           eyebrow="Building"
           title="Currently Building"
@@ -38,50 +29,55 @@ export function CurrentlyBuilding({
           align="center"
         />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mx-auto mt-16 max-w-3xl overflow-hidden rounded-2xl border-[4px] border-black shadow-[10px_10px_0px_#000]">
+          {/* breaking news banner */}
+          <div className="flex items-center gap-3 border-b-[3px] border-black bg-black px-6 py-3">
+            <span className="flex items-center gap-1.5 rounded-sm bg-red-600 px-2.5 py-1 text-xs font-black uppercase text-white">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
+              </span>
+              Breaking
+            </span>
+            <span className="font-mono text-xs font-semibold text-white/70">
+              {data.currentlyBuilding.length} stories developing right now
+            </span>
+          </div>
 
-          {data.currentlyBuilding.map(
-            (
-              item,
-              index
-            ) => {
-
-              const Icon =
-                icons[
-                  index %
-                  icons.length
-                ];
+          {/* bulletin feed */}
+          <div className="divide-y-[3px] divide-black bg-white">
+            {data.currentlyBuilding.map((item, index) => {
+              const Icon = icons[index % icons.length];
 
               return (
-                <div
+                <motion.div
                   key={item}
-                  className="rounded-[24px] border-[4px] border-black bg-white p-8 shadow-[8px_8px_0px_#000]"
+                  initial={{ opacity: 0, x: -14 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: index * 0.08 }}
+                  className="flex items-start gap-4 border-l-[6px] border-red-500 px-6 py-6 sm:px-8"
                 >
-
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border-[3px] border-black bg-[var(--blue)]">
-                    <Icon size={28} />
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border-[3px] border-black bg-[var(--blue)]">
+                    <Icon size={19} />
                   </div>
 
-                  <h3 className="mt-6 font-heading text-2xl font-black">
-                    {item}
-                  </h3>
-
-                  <p className="mt-4 leading-relaxed text-neutral-600">
-                    Currently being designed, developed or improved as part of my ongoing work.
-                  </p>
-
-                  <div className="mt-6 inline-flex items-center gap-2 rounded-full border-[2px] border-black bg-[var(--yellow)] px-3 py-1 text-xs font-bold">
-                    <div className="h-2.5 w-2.5 rounded-full bg-black animate-pulse" />
-                    ACTIVE DEVELOPMENT
+                  <div className="min-w-0 flex-1">
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-red-600">
+                      Developing Story
+                    </span>
+                    <h3 className="mt-1 font-heading text-xl font-black leading-tight sm:text-2xl">
+                      {item}
+                    </h3>
+                    <p className="mt-1.5 text-sm text-neutral-500">
+                      Actively being designed, developed and shipped.
+                    </p>
                   </div>
-
-                </div>
+                </motion.div>
               );
-            }
-          )}
-
+            })}
+          </div>
         </div>
-
       </Container>
     </section>
   );
