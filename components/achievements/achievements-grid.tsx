@@ -62,7 +62,7 @@ export function AchievementsGrid({
               (item) =>
                 item.category
             )
-            .filter(Boolean)
+            .filter(Boolean) as string[]
         )
       ),
     ],
