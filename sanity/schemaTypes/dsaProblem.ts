@@ -114,6 +114,32 @@ export const dsaProblem = defineType({
       type: "boolean",
       initialValue: false,
     }),
+    defineField({
+      name: "status",
+      title: "Status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Solved", value: "solved" },
+          { title: "Revising", value: "revising" },
+          { title: "Need Practice", value: "need-practice" },
+        ],
+      },
+      initialValue: "solved",
+    }),
+
+    defineField({
+      name: "attempts",
+      title: "Attempts",
+      type: "number",
+      initialValue: 1,
+    }),
+
+    defineField({
+      name: "notes",
+      title: "Personal Notes",
+      type: "text",
+    }),
   ],
 
   preview: {
