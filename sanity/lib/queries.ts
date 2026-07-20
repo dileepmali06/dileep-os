@@ -84,7 +84,7 @@ export const BLOG_BY_SLUG_QUERY = groq`
    LEARNING JOURNEY
 ============================================================ */
 
-export const LEARNING_LOGS_QUERY = groq`
+export const FEATURED_LEARNING_LOGS_QUERY = groq`
 *[
   _type == "learningLog"
 ]

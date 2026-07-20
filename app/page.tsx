@@ -17,7 +17,7 @@ import { getFeaturedAchievements } from "@/sanity/services/achievement";
 import { getFeaturedBlogs } from "@/sanity/services/blog";
 import { getFeaturedProjects } from "@/sanity/services/featuredProjects";
 import { getHomepageSettings } from "@/sanity/services/homepage";
-import { getLearningLogs } from "@/sanity/services/learning";
+import { getFeaturedLearningLogs } from "@/sanity/services/learning";
 import { getNowSection } from "@/sanity/services/now";
 import { getFeaturedRepositories } from "@/sanity/services/repository";
 import { getSkills } from "@/sanity/services/skills";
@@ -37,7 +37,7 @@ export default async function Home() {
   const featuredProjects = await getFeaturedProjects();
   const repositories = await getFeaturedRepositories();
   const uses = await getUses();
-  const learningLogs = await getLearningLogs();
+  const learningLogs = await getFeaturedLearningLogs();
   const timeline = await getTimeline();
   const featuredBlogs = await getFeaturedBlogs();
   const testimonials = await getTestimonials();
