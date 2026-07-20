@@ -1,8 +1,8 @@
 import { client } from "../lib/client";
-import { LEARNING_LOGS_QUERY } from "../lib/queries";
+import { FEATURED_LEARNING_LOGS_QUERY } from "../lib/queries";
 
-export async function getLearningLogs() {
+export async function getFeaturedLearningLogs() {
   return client.fetch(
-    LEARNING_LOGS_QUERY
+    FEATURED_LEARNING_LOGS_QUERY
   );
 }
