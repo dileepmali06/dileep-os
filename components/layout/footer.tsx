@@ -1,16 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { Mail, ArrowUp } from "lucide-react";
+import { Mail, ArrowUp, Sparkles } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { TbBrandLinkedinFilled } from "react-icons/tb";
 import { FaXTwitter } from "react-icons/fa6";
 
-const navLinks = [
+// bump this whenever you ship something worth noting in /changelog
+const SITE_VERSION = "v1.0.0";
+
+const exploreLinks = [
   { title: "Home", href: "/" },
-  { title: "Projects", href: "/projects" },
-  { title: "Blog", href: "/blog" },
   { title: "About", href: "/about" },
+  { title: "Projects", href: "/projects" },
+  { title: "Journey", href: "/journey" },
+  { title: "Achievements", href: "/achievements" },
+  { title: "Guestbook", href: "/guestbook" },
+];
+
+const learnLinks = [
+  { title: "Blog", href: "/blog" },
+  { title: "DSA", href: "/dsa" },
+  { title: "Java Snippets", href: "/java" },
+  { title: "Uses", href: "/uses" },
+  { title: "Now", href: "/now" },
 ];
 
 const socialLinks = [
@@ -24,7 +37,7 @@ export function Footer() {
   return (
     <footer className="border-t-[4px] border-black">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* brand */}
           <div className="max-w-sm">
             <Link href="/" className="flex items-center gap-2.5">
@@ -41,24 +54,52 @@ export function Footer() {
               software engineer every day.
             </p>
 
-            <div className="mt-5 inline-flex items-center gap-2 rounded-full border-[2px] border-black bg-white px-3.5 py-1.5">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+            <div className="mt-5 flex flex-wrap items-center gap-2.5">
+              <span className="inline-flex items-center gap-2 rounded-full border-[2px] border-black bg-white px-3.5 py-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                </span>
+                <span className="text-xs font-semibold text-neutral-600">
+                  Available for opportunities
+                </span>
               </span>
-              <span className="text-xs font-semibold text-neutral-600">
-                Available for opportunities
-              </span>
+
+              <Link
+                href="/changelog"
+                className="inline-flex items-center gap-1.5 rounded-full border-[2px] border-black bg-[var(--yellow)] px-3.5 py-1.5 text-xs font-bold transition-transform hover:-translate-y-0.5"
+              >
+                <Sparkles size={12} />
+                {SITE_VERSION}
+              </Link>
             </div>
           </div>
 
-          {/* nav */}
+          {/* explore */}
           <div>
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-neutral-400">
-              Navigate
+              Explore
             </p>
             <div className="flex flex-col gap-3 font-heading font-semibold">
-              {navLinks.map((link) => (
+              {exploreLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="w-fit transition-transform hover:translate-x-1"
+                >
+                  {link.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* learn */}
+          <div>
+            <p className="mb-4 font-mono text-xs uppercase tracking-widest text-neutral-400">
+              Learn
+            </p>
+            <div className="flex flex-col gap-3 font-heading font-semibold">
+              {learnLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -75,7 +116,7 @@ export function Footer() {
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-neutral-400">
               Connect
             </p>
-            <div className="flex gap-2.5">
+            <div className="flex flex-wrap gap-2.5">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (

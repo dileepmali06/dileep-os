@@ -74,6 +74,26 @@ export const javaSnippet = defineType({
       type: "boolean",
       initialValue: false,
     }),
+
+    defineField({
+      name: "order",
+      title: "Display Order",
+      type: "number",
+      initialValue: 0,
+    }),
+
+    defineField({
+      name: "createdAt",
+      title: "Created At",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+    }),
+
+    defineField({
+      name: "updatedAt",
+      title: "Updated At",
+      type: "datetime",
+    }),
   ],
 
   preview: {
