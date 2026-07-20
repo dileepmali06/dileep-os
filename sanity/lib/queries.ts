@@ -80,26 +80,7 @@ export const BLOG_BY_SLUG_QUERY = groq`
   *[_type == "blog" && slug.current == $slug][0]
 `;
 
-/* ============================================================
-   LEARNING JOURNEY
-============================================================ */
 
-export const FEATURED_LEARNING_LOGS_QUERY = groq`
-*[
-  _type == "learningLog"
-]
-| order(date asc){
-  _id,
-  title,
-  date,
-  category,
-  summary,
-  keyTakeaways,
-  favorite,
-  difficulty,
-  resources
-}
-`;
 
 export const DSA_PROBLEMS_QUERY = groq`
   *[_type == "dsaProblem"]
