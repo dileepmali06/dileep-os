@@ -49,9 +49,9 @@ export default async function ResumePage() {
 
       <FeaturedResumes resumes={featuredResumes} />
 
+      <ResumeTimeline resumes={resumes} />    
+    
       <ResumeList resumes={resumes} />
-
-      <ResumeTimeline resumes={resumes} />
 
       <ContactCTA />
     </main>
