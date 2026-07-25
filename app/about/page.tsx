@@ -13,13 +13,13 @@ import { getCertificates } from "@/sanity/services/certificate";
 import { getCoreValues } from "@/sanity/services/core-value";
 import { getCourses } from "@/sanity/services/course";
 import { getEducation } from "@/sanity/services/education";
-import { getExperience } from "@/sanity/services/experience";
+import { getFeaturedExperiences } from "@/sanity/services/experience";
 import { getFunFacts } from "@/sanity/services/fun-fact";
 
 export default async function AboutPage() {
   const about = await getAbout();
   const education = await getEducation();
-  const experience = await getExperience();
+  const experience = await getFeaturedExperiences();
   const certificates = await getCertificates();
   const courses = await getCourses();
   const coreValues = await getCoreValues();
