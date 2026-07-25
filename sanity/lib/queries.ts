@@ -196,17 +196,7 @@ export const CHANGELOG_QUERY = groq`
    COMMUNITY
 ============================================================ */
 
-export const TESTIMONIALS_QUERY = groq`
-*[_type == "testimonial" && featured == true]
-| order(_createdAt desc)[0...3]{
-  _id,
-  name,
-  position,
-  company,
-  message,
-  avatar
-}
-`;
+
 
 export const GUESTBOOK_QUERY = groq`
   *[_type == "guestbook"]
