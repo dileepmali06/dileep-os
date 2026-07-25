@@ -6,8 +6,10 @@ import {
   Quote,
   UserRound,
   ArrowRight,
-  Sparkles,
+  BadgeCheck,
 } from "lucide-react";
+
+import { FaLinkedinIn } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import type { Image as SanityImage } from "sanity";
 
@@ -18,20 +20,83 @@ import { urlFor } from "@/sanity/lib/image";
 
 type Testimonial = {
   _id: string;
+  _createdAt: string;
+  _updatedAt: string;
   name: string;
   position: string;
   company: string;
   message: string;
-  avatar?: SanityImage;
+  avatar?: SanityImage & { alt?: string };
+  linkedinUrl?: string;
+  featured?: boolean;
 };
 
-export function Testimonials({
-  data,
+const SECONDARY_ROTATION = ["-rotate-1", "rotate-1"];
+
+function Avatar({
+  testimonial,
+  size,
 }: {
-  data: Testimonial[];
+  testimonial: Testimonial;
+  size: number;
 }) {
+  const avatarUrl = testimonial.avatar
+    ? urlFor(testimonial.avatar)
+        .width(size * 2)
+        .height(size * 2)
+        .url()
+    : null;
+
+  if (avatarUrl) {
+    return (
+      <div
+        className="relative shrink-0 overflow-hidden rounded-full border-[2px] border-black"
+        style={{ width: size, height: size }}
+      >
+        <Image
+          src={avatarUrl}
+          alt={testimonial.avatar?.alt || testimonial.name}
+          fill
+          className="object-cover"
+        />
+      </div>
+    );
+  }
+
   return (
-    <section className="section-padding">
+    <div
+      className="flex shrink-0 items-center justify-center rounded-full border-[2px] border-black bg-neutral-100"
+      style={{ width: size, height: size }}
+    >
+      <UserRound size={Math.round(size * 0.45)} />
+    </div>
+  );
+}
+
+function LinkedInBadge({ url }: { url: string }) {
+  return (
+    <Link
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="View LinkedIn profile"
+      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[2px] border-black bg-transparent text-white transition-transform duration-200 hover:scale-110"
+    >
+      <FaLinkedinIn size={16} />
+    </Link>
+  );
+}
+
+export function Testimonials({ data }: { data: Testimonial[] }) {
+  if (!data?.length) return null;
+
+  const [featured, ...rest] = data;
+  const companies = Array.from(
+    new Set(data.map((t) => t.company).filter(Boolean))
+  );
+
+  return (
+    <section className="section-padding overflow-hidden">
       <Container>
         <SectionHeading
           eyebrow="Testimonials"
@@ -40,168 +105,113 @@ export function Testimonials({
           align="center"
         />
 
-        <div className="mt-16 grid gap-6 lg:grid-cols-3">
-          {data?.map(
-            (
-              testimonial,
-              index
-            ) => {
-              const avatarUrl =
-                testimonial.avatar
-                  ? urlFor(
-                      testimonial.avatar
-                    )
-                      .width(
-                        200
-                      )
-                      .height(
-                        200
-                      )
-                      .url()
-                  : null;
+        {companies.length > 1 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-semibold uppercase tracking-wide"
+          >
+            <span className="tracking-normal text-neutral-400">
+              Trusted by teams at
+            </span>
+            {companies.map((company) => (
+              <span key={company} className="text-neutral-700">
+                {company}
+              </span>
+            ))}
+          </motion.div>
+        )}
 
-              return (
+        <div
+          className={`mt-12 grid gap-8 ${
+            rest.length > 0 ? "lg:grid-cols-5" : "lg:grid-cols-1"
+          }`}
+        >
+          {/* Featured / most recent testimonial */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className={`relative rounded-2xl border-[3px] border-black bg-[var(--yellow)] p-8 shadow-[8px_8px_0px_#000] ${
+              rest.length > 0 ? "lg:col-span-3" : "mx-auto max-w-2xl"
+            }`}
+          >
+            <div className="absolute -right-4 -top-4 flex h-16 w-16 rotate-12 items-center justify-center rounded-full border-[3px] border-black bg-white text-center shadow-[3px_3px_0px_#000]">
+              <span className="text-[10px] font-black leading-tight">
+                LATEST
+                <br />
+                PICK
+              </span>
+            </div>
+
+            <Quote className="text-black/20" size={44} />
+
+            <p className="mt-4 font-heading text-xl font-medium leading-snug text-black sm:text-2xl">
+              &ldquo;{featured.message}&rdquo;
+            </p>
+
+            <div className="mt-8 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <Avatar testimonial={featured} size={56} />
+                <div>
+                  <h3 className="font-heading text-base font-bold">
+                    {featured.name}
+                  </h3>
+                  <p className="text-sm text-black/70">
+                    {featured.position} · {featured.company}
+                  </p>
+                </div>
+              </div>
+
+              {featured.linkedinUrl && (
+                <LinkedInBadge url={featured.linkedinUrl} />
+              )}
+            </div>
+          </motion.div>
+
+          {/* Remaining testimonials, stacked */}
+          {rest.length > 0 && (
+            <div className="flex flex-col gap-6 lg:col-span-2">
+              {rest.map((testimonial, index) => (
                 <motion.div
-                  key={
-                    testimonial._id
-                  }
-                  initial={{
-                    opacity: 0,
-                    y: 16,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  viewport={{
-                    once: true,
-                  }}
-                  transition={{
-                    duration: 0.4,
-                    delay:
-                      index *
-                      0.1,
-                  }}
-                  className="relative rounded-2xl border-[3px] border-black bg-white p-8 shadow-[6px_6px_0px_#000] transition-all duration-300 hover:-translate-y-1 hover:shadow-[10px_10px_0px_#000]"
+                  key={testimonial._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: (index + 1) * 0.1 }}
+                  className={`relative flex-1 rounded-2xl border-[3px] border-black bg-white p-6 shadow-[6px_6px_0px_#000] transition-all duration-300 hover:-translate-y-1 hover:shadow-[9px_9px_0px_#000] ${
+                    SECONDARY_ROTATION[index % SECONDARY_ROTATION.length]
+                  }`}
                 >
-                  <div className="flex h-full flex-col justify-between gap-6">
-                    <Quote
-                      className="text-black/15"
-                      size={36}
-                    />
+                  <p className="text-sm leading-relaxed text-neutral-600">
+                    &ldquo;{testimonial.message}&rdquo;
+                  </p>
 
-                    <p className="leading-relaxed text-neutral-600">
-                      &ldquo;
-                      {
-                        testimonial.message
-                      }
-                      &rdquo;
-                    </p>
-
+                  <div className="mt-5 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      {avatarUrl ? (
-                        <div className="relative h-12 w-12 overflow-hidden rounded-full border-[2px] border-black">
-                          <Image
-                            src={
-                              avatarUrl
-                            }
-                            alt={
-                              testimonial.name
-                            }
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full border-[2px] border-black bg-neutral-100">
-                          <UserRound
-                            size={
-                              22
-                            }
-                          />
-                        </div>
-                      )}
-
+                      <Avatar testimonial={testimonial} size={40} />
                       <div>
-                        <h3 className="font-heading text-base font-bold">
-                          {
-                            testimonial.name
-                          }
-                        </h3>
-
-                        <p className="text-sm text-neutral-500">
-                          {
-                            testimonial.position
-                          }
-                        </p>
-
-                        <p className="text-xs text-neutral-400">
-                          {
-                            testimonial.company
-                          }
+                        <h4 className="font-heading text-sm font-bold">
+                          {testimonial.name}
+                        </h4>
+                        <p className="text-xs text-neutral-500">
+                          {testimonial.position}, {testimonial.company}
                         </p>
                       </div>
                     </div>
+
+                    {testimonial.linkedinUrl && (
+                      <LinkedInBadge url={testimonial.linkedinUrl} />
+                    )}
                   </div>
                 </motion.div>
-              );
-            }
+              ))}
+            </div>
           )}
         </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 16,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.4,
-            delay: 0.3,
-          }}
-          className="mx-auto mt-8 flex max-w-2xl flex-col items-center gap-4 rounded-2xl border-[3px] border-black bg-[var(--yellow)] p-8 text-center shadow-[8px_8px_0px_#000] sm:flex-row sm:text-left"
-        >
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-[3px] border-black bg-white">
-            <Sparkles
-              size={22}
-            />
-          </div>
-
-          <div className="flex-1">
-            <h3 className="font-heading text-lg font-black">
-              Want to work together?
-            </h3>
-
-            <p className="text-sm text-neutral-800/80">
-              Let&apos;s build
-              something
-              meaningful
-              together and
-              create the next
-              success story.
-            </p>
-          </div>
-
-          <Button
-            className="shrink-0 bg-black text-white hover:bg-black/90"
-          >
-            <Link href="/contact" className="flex items-center">
-              Let&apos;s Connect
-
-              <ArrowRight
-                size={16}
-                className="ml-1.5"
-              />
-            </Link>
-          </Button>
-        </motion.div>
       </Container>
     </section>
   );
