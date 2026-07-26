@@ -10,14 +10,14 @@ import { ContactCTA } from "@/components/sections/contact";
 import { getAchievements } from "@/sanity/services/achievement";
 import { getCertificates } from "@/sanity/services/certificate";
 import { getEducation } from "@/sanity/services/education";
-import { getExperience } from "@/sanity/services/experience";
+import { getAllExperiences } from "@/sanity/services/experience";
 import { getGoals } from "@/sanity/services/goal";
 import { getTimeline } from "@/sanity/services/timeline";
 
 export default async function JourneyPage() {
   const timeline = await getTimeline();
   const education = await getEducation();
-  const experience = await getExperience();
+  const experience = await getAllExperiences();
   const certificates = await getCertificates();
   const achievements = await getAchievements();
   const goals = await getGoals();
