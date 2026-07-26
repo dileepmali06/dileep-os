@@ -35,20 +35,21 @@ export default function FeaturedMessages({ messages }: FeaturedMessagesProps) {
         <div className="mb-7 flex items-center gap-2.5">
           <Sparkles size={15} />
           <p className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400">
-            Editor&apos;s picks
+            Wall of fame
           </p>
         </div>
-        <h2 className="-mt-1 mb-6 text-2xl font-black sm:text-3xl">Featured Messages</h2>
+        <h2 className="-mt-1 mb-8 text-2xl font-black sm:text-3xl">Featured Messages</h2>
 
-        <div className="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+        {/* masonry wall */}
+        <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
           {messages.map((entry, index) => (
             <motion.div
               key={entry._id}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: index * 0.08 }}
-              className="w-[280px] shrink-0 snap-start"
+              transition={{ duration: 0.35, delay: (index % 6) * 0.06 }}
+              className="mb-5 break-inside-avoid"
             >
               <GuestbookCard entry={entry} />
             </motion.div>

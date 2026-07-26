@@ -23,7 +23,7 @@ export default function GuestbookFilter({
     <div className="space-y-4">
       {countries.length > 0 && (
         <div>
-          <p className="mb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+          <p className="mb-2 flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-400">
             <Globe2 size={11} />
             Country
           </p>
@@ -53,7 +53,7 @@ export default function GuestbookFilter({
 
       {professions.length > 0 && (
         <div>
-          <p className="mb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+          <p className="mb-2 flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-400">
             <Briefcase size={11} />
             Profession
           </p>
