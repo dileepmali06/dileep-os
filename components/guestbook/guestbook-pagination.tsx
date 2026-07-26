@@ -25,12 +25,12 @@ export default function GuestbookPagination({
   }
 
   return (
-    <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+    <div className="mt-8 flex flex-wrap items-center justify-center gap-2 font-mono">
       <button
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
         aria-label="Previous page"
-        className="flex h-9 w-9 items-center justify-center rounded-xl border-[2px] border-black bg-white disabled:opacity-30"
+        className="flex h-9 w-9 items-center justify-center rounded-lg border-[2px] border-black bg-white disabled:opacity-30"
       >
         <ChevronLeft size={16} />
       </button>
@@ -38,13 +38,13 @@ export default function GuestbookPagination({
       {pages.map((page, index) =>
         page === "gap" ? (
           <span key={`gap-${index}`} className="px-1 text-sm text-neutral-400">
-            ...
+            ···
           </span>
         ) : (
           <button
             key={page}
             onClick={() => onPageChange(page)}
-            className={`flex h-9 w-9 items-center justify-center rounded-xl border-[2px] border-black text-sm font-bold ${
+            className={`flex h-9 w-9 items-center justify-center rounded-lg border-[2px] border-black text-sm font-bold transition-colors ${
               page === currentPage ? "bg-[var(--pink)]" : "bg-white hover:bg-neutral-50"
             }`}
           >
@@ -57,7 +57,7 @@ export default function GuestbookPagination({
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
         aria-label="Next page"
-        className="flex h-9 w-9 items-center justify-center rounded-xl border-[2px] border-black bg-white disabled:opacity-30"
+        className="flex h-9 w-9 items-center justify-center rounded-lg border-[2px] border-black bg-white disabled:opacity-30"
       >
         <ChevronRight size={16} />
       </button>

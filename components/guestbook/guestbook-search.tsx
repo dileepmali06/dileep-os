@@ -10,16 +10,12 @@ type GuestbookSearchProps = {
 export default function GuestbookSearch({ value, onChange }: GuestbookSearchProps) {
   return (
     <div className="relative">
-      <Search
-        size={18}
-        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
-      />
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Search by name, profession, country..."
-        className="h-12 w-full rounded-xl border-[2px] border-black bg-white pl-11 pr-11 text-sm font-medium outline-none transition-shadow focus:shadow-[3px_3px_0px_#000]"
+        className="h-12 w-full rounded-lg border-[2px] border-black bg-white pl-11 pr-11 text-sm font-medium outline-none transition-shadow focus:shadow-[3px_3px_0px_#000]"
       />
       {value && (
         <button
