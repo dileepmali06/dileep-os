@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { BookOpen } from "lucide-react";
 
 import { Container } from "../ui/container";
 import GuestbookCard from "./guestbook-card";
@@ -82,14 +83,18 @@ export default function GuestbookList({ messages }: GuestbookListProps) {
   return (
     <section id="all-messages" className="pb-24">
       <Container>
-        <div className="mb-8">
-          <p className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400">
-            The Guestbook
-          </p>
-          <h2 className="mt-1 text-3xl font-black sm:text-4xl">All Messages</h2>
+        <div className="mb-8 flex items-center gap-2.5">
+          <BookOpen size={16} />
+          <div>
+            <p className="font-mono text-xs font-bold uppercase tracking-widest text-neutral-400">
+              The Guestbook
+            </p>
+            <h2 className="mt-0.5 text-3xl font-black sm:text-4xl">All Messages</h2>
+          </div>
         </div>
 
-        <div className="rounded-2xl border-[3px] border-black bg-white p-5 shadow-[7px_7px_0px_#000] sm:p-6">
+        {/* ledger toolbar */}
+        <div className="rounded-2xl border-[2px] border-black bg-[#fbf8f0] p-5 shadow-[6px_6px_0px_#000] sm:p-6">
           <GuestbookSearch
             value={search}
             onChange={(v) => handleFilterChange(() => setSearch(v))}

@@ -16,9 +16,11 @@ type GuestbookStatsProps = {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 20, rotate: 0 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
+
+const stampTilts = [-3, 2, -2, 3];
 
 export default function GuestbookStats({ stats }: GuestbookStatsProps) {
   const overview = [
@@ -31,30 +33,51 @@ export default function GuestbookStats({ stats }: GuestbookStatsProps) {
   return (
     <section className="pb-20">
       <Container>
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mx-auto max-w-4xl overflow-hidden rounded-[28px] border-[3px] border-black bg-white shadow-[10px_10px_0px_#000]"
-        >
-          <div className="grid divide-y-[3px] divide-black sm:grid-cols-2 sm:divide-x-[3px] sm:divide-y-0 xl:grid-cols-4">
-            {overview.map((item) => (
-              <div key={item.title} className="flex items-center gap-4 p-6">
+        <div className="mx-auto max-w-4xl">
+          <p className="mb-6 text-center font-mono text-xs font-bold uppercase tracking-widest text-neutral-400">
+            — collected from around the world —
+          </p>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+            className="flex flex-wrap items-center justify-center gap-6 sm:gap-8"
+          >
+            {overview.map((item, index) => (
+              <motion.div
+                key={item.title}
+                variants={fadeUp}
+                animate={{ rotate: stampTilts[index % stampTilts.length] }}
+                whileHover={{ rotate: 0, scale: 1.05 }}
+                className="relative w-32"
+              >
+                {/* perforated stamp edge */}
                 <div
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border-[2px] border-black"
-                  style={{ background: item.color }}
+                  className="relative border-[2px] border-dashed border-black/50 bg-white p-4 shadow-[3px_4px_0px_rgba(0,0,0,0.15)]"
+                  style={{
+                    maskImage:
+                      "radial-gradient(circle 3px at 0 0, transparent 3px, black 3.5px), radial-gradient(circle 3px at 100% 0, transparent 3px, black 3.5px), radial-gradient(circle 3px at 0 100%, transparent 3px, black 3.5px), radial-gradient(circle 3px at 100% 100%, transparent 3px, black 3.5px)",
+                  }}
                 >
-                  <item.icon size={18} />
+                  <div className="flex flex-col items-center text-center">
+                    <div
+                      className="flex h-9 w-9 items-center justify-center rounded-full border-[2px] border-black"
+                      style={{ background: item.color }}
+                    >
+                      <item.icon size={15} />
+                    </div>
+                    <p className="mt-2 font-heading text-xl font-black leading-none">{item.value}</p>
+                    <p className="mt-1 text-[9px] font-bold uppercase tracking-wide text-neutral-400">
+                      {item.title}
+                    </p>
+                  </div>
                 </div>
-                <div className="min-w-0">
-                  <p className="truncate font-heading text-2xl font-black">{item.value}</p>
-                  <p className="mt-0.5 text-xs font-semibold text-neutral-500">{item.title}</p>
-                </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </Container>
     </section>
   );
