@@ -14,30 +14,54 @@ const exploreLinks = [
   { title: "About", href: "/about" },
   { title: "Projects", href: "/projects" },
   { title: "Journey", href: "/journey" },
+  { title: "Blog", href: "/blog" },
+  { title: "Contact", href: "/contact" },
+];
+
+const resourceLinks = [
+  { title: "Books", href: "/books" },
+  { title: "Learning", href: "/learning" },
+  { title: "DSA", href: "/dsa" },
+  { title: "Java", href: "/java" },
+  { title: "Uses", href: "/uses" },
+  { title: "Resume", href: "/resume" },
+];
+
+const moreLinks = [
+  { title: "Experience", href: "/experience" },
   { title: "Achievements", href: "/achievements" },
+  { title: "Now", href: "/now" },
   { title: "Guestbook", href: "/guestbook" },
 ];
 
-const learnLinks = [
-  { title: "Blog", href: "/blog" },
-  { title: "DSA", href: "/dsa" },
-  { title: "Java Snippets", href: "/java" },
-  { title: "Uses", href: "/uses" },
-  { title: "Now", href: "/now" },
-];
-
 const socialLinks = [
-  { icon: FaGithub, href: "https://github.com/dileepmali06", label: "GitHub" },
-  { icon: TbBrandLinkedinFilled, href: "#", label: "LinkedIn" },
-  { icon: FaXTwitter, href: "#", label: "X / Twitter" },
-  { icon: Mail, href: "mailto:hello@dileepmali.me", label: "Email" },
+  {
+    icon: FaGithub,
+    href: "https://github.com/dileepmali06",
+    label: "GitHub",
+  },
+  {
+    icon: TbBrandLinkedinFilled,
+    href: "https://linkedin.com/in/your-linkedin",
+    label: "LinkedIn",
+  },
+  {
+    icon: FaXTwitter,
+    href: "https://x.com/yourusername",
+    label: "X",
+  },
+  {
+    icon: Mail,
+    href: "mailto:hello@dileepmali.me",
+    label: "Email",
+  },
 ];
 
 export function Footer() {
   return (
     <footer className="border-t-[4px] border-black">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
           {/* brand */}
           <div className="max-w-sm">
             <Link href="/" className="flex items-center gap-2.5">
@@ -93,13 +117,14 @@ export function Footer() {
             </div>
           </div>
 
-          {/* learn */}
+          {/* resources */}
           <div>
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-neutral-400">
-              Learn
+              Resources
             </p>
+
             <div className="flex flex-col gap-3 font-heading font-semibold">
-              {learnLinks.map((link) => (
+              {resourceLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -111,14 +136,36 @@ export function Footer() {
             </div>
           </div>
 
+          {/* more */}
+          <div>
+            <p className="mb-4 font-mono text-xs uppercase tracking-widest text-neutral-400">
+              More
+            </p>
+
+            <div className="flex flex-col gap-3 font-heading font-semibold">
+              {moreLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="w-fit transition-transform hover:translate-x-1"
+                >
+                  {link.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+
           {/* connect */}
           <div>
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-neutral-400">
               Connect
             </p>
+
             <div className="flex flex-wrap gap-2.5">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
+
                 return (
                   <a
                     key={social.label}
@@ -128,11 +175,15 @@ export function Footer() {
                     aria-label={social.label}
                     className="flex h-11 w-11 items-center justify-center rounded-xl border-[2px] border-black bg-white transition-all duration-200 hover:-translate-y-1 hover:bg-[var(--yellow)]"
                   >
-                    <Icon size={17} />
+                    <Icon size={18} />
                   </a>
                 );
               })}
             </div>
+
+            <p className="mt-5 text-sm leading-6 text-neutral-500">
+              Follow my work, connect professionally, or drop me an email anytime.
+            </p>
           </div>
         </div>
 
