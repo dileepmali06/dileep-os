@@ -31,6 +31,7 @@ import { recommendation } from './recommendation'
 import { event } from './event'
 import { coreValue } from './core-value'
 import { funFact } from './funFact'
+import { contactStats } from './contactStats';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [siteSettings,
@@ -64,7 +65,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     recommendation,
     event,
     coreValue,
-    funFact
+    funFact,
+    contactStats
 
   ],
 }

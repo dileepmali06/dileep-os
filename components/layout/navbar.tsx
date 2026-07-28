@@ -20,13 +20,36 @@ import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { title: "About", href: "/about", icon: UserRound },
-  { title: "Projects", href: "/projects", icon: FolderGit2 },
-  { title: "Learning", href: "/learning", icon: BookOpen },
-  { title: "Blog", href: "/blog", icon: Newspaper },
-  { title: "Now", href: "/now", icon: Clock },
-  { title: "Uses", href: "/uses", icon: Wrench },
-  { title: "Contact", href: "/contact", icon: Mail },
+  {
+    title: "About",
+    href: "/about",
+    icon: UserRound,
+  },
+  {
+    title: "Projects",
+    href: "/projects",
+    icon: FolderGit2,
+  },
+  {
+    title: "Journey",
+    href: "/journey",
+    icon: Clock,
+  },
+  {
+    title: "Blog",
+    href: "/blog",
+    icon: Newspaper,
+  },
+  {
+    title: "Books",
+    href: "/books",
+    icon: BookOpen,
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+    icon: Mail,
+  },
 ];
 
 function MenuBarClock() {
@@ -59,7 +82,7 @@ export function Navbar() {
         <nav className="flex h-16 items-center justify-between rounded-2xl border-[3px] border-black bg-white px-4 brutal-shadow-lg sm:px-5">
           {/* logo — app menu */}
           <Link href="/" className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg border-[2px] border-black bg-[var(--blue)] font-heading text-sm font-black">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg border-[2px] border-black bg-[var(--yellow)] font-heading text-sm font-black">
               D
             </span>
             <span className="hidden font-heading text-lg font-black sm:inline">

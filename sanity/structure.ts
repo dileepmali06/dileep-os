@@ -35,6 +35,8 @@ import {
   Users,
   Heart,
   Sparkles,
+  Inbox,
+  Mail,
 } from "lucide-react";
 
 export const structure: StructureResolver = (S) =>
@@ -115,6 +117,19 @@ export const structure: StructureResolver = (S) =>
                     .documentId("skills")
                 ),
             ])
+        ),
+
+      // =====================================================
+      // INBOX — incoming messages
+      // =====================================================
+
+      S.listItem()
+        .title("Contact Stats")
+        .icon(Mail)
+        .child(
+          S.document()
+            .schemaType("contactStats")
+            .documentId("contactStats")
         ),
 
       // =====================================================
@@ -259,13 +274,13 @@ export const structure: StructureResolver = (S) =>
                 .title("Testimonials")
                 .icon(MessageSquare),
 
-              S.documentTypeListItem("guestbook")
-                .title("Guestbook")
-                .icon(PenSquare),
-
               S.documentTypeListItem("event")
                 .title("Events")
                 .icon(CalendarDays),
+
+              S.documentTypeListItem("guestbook")
+                .title("Guestbook")
+                .icon(PenSquare),
             ])
         ),
     ]);
