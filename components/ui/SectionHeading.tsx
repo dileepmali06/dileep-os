@@ -19,35 +19,39 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "space-y-4",
+        "space-y-4 md:space-y-5",
         align === "center" && "text-center",
         className
       )}
     >
+      {/* 1. EYEBROW (Button Badge) */}
       {eyebrow && (
         <div
           className={cn(
-            "inline-flex items-center rounded-full border-[3px] border-black bg-[var(--yellow)] px-4 py-2",
-            "font-heading text-sm font-bold uppercase tracking-wider"
+            "inline-flex items-center rounded-full border-[2.5px] md:border-[3px] border-black bg-(--yellow) px-4 py-1.5 md:py-2",
+            "font-heading text-xs md:text-sm font-bold uppercase tracking-wider select-none"
           )}
         >
           {eyebrow}
         </div>
       )}
 
+      {/* 2. TITLE (Main Heading) */}
       <h2
         className={cn(
-          "font-heading text-4xl font-black leading-none tracking-tight",
-          "sm:text-5xl lg:text-6xl"
+          "font-heading font-black leading-tight tracking-tight text-neutral-900",
+          "text-3xl sm:text-4xl lg:text-5xl"
         )}
       >
         {title}
       </h2>
 
+      {/* 3. DESCRIPTION (Subtext) */}
       {description && (
         <p
           className={cn(
-            "max-w-2xl text-lg leading-relaxed text-neutral-600",
+            "text-neutral-600 font-normal leading-relaxed max-w-2xl",
+            "text-base md:text-lg whitespace-pre-line",
             align === "center" && "mx-auto"
           )}
         >

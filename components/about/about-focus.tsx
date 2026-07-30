@@ -49,12 +49,12 @@ export function AboutFocus({ data }: AboutFocusProps) {
       <Container>
         <SectionHeading
           eyebrow="Current Focus"
-          title="What I'm Working On Right Now"
+          title="What I'm Learning"
           description="The technologies and skills I'm actively investing in."
           align="center"
         />
 
-        <div className="mt-16 py-10 -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 sm:mx-0 sm:justify-center sm:px-0">
+        <div className="mt-10 sm:mt-14 lg:mt-16 py-6  -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-6 sm:mx-0 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:overflow-x-visible sm:px-0 sm:pb-0">
           {items.map((item, index) => {
             const Icon = getIcon(item);
             const color = colors[index % colors.length];
@@ -66,29 +66,33 @@ export function AboutFocus({ data }: AboutFocusProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className="relative w-[220px] shrink-0 snap-start overflow-hidden rounded-2xl border-[3px] border-black bg-white p-6 shadow-[6px_6px_0px_#000] transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[9px_9px_0px_#000] sm:w-[240px]"
+                className="relative w-60 sm:w-auto shrink-0 snap-start overflow-hidden rounded-2xl border-[3px] border-black bg-white p-5 sm:p-6 shadow-[5px_5px_0px_#000] sm:shadow-[6px_6px_0px_#000] transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[8px_8px_0px_#000]"
               >
-                <span className="absolute -right-2 -top-6 select-none font-heading text-8xl font-black text-black/[0.06]">
+                {/* Background Card Numbers */}
+                <span className="absolute -right-2 -top-5 sm:-top-6 select-none font-heading text-7xl sm:text-8xl font-black text-black/5">
                   {String(index + 1).padStart(2, "0")}
                 </span>
 
+                {/* Icon Container */}
                 <div
-                  className="relative flex h-12 w-12 items-center justify-center rounded-xl border-[3px] border-black"
+                  className="relative flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl border-[2.5px] sm:border-[3px] border-black"
                   style={{ background: color }}
                 >
-                  <Icon size={22} />
+                  <Icon className="size-5 sm:size-5.5" />
                 </div>
 
-                <h3 className="relative mt-6 font-heading text-xl font-black leading-tight">
+                {/* Item Text Title */}
+                <h3 className="relative mt-5 sm:mt-6 font-heading text-lg sm:text-xl font-black leading-tight text-neutral-900 wrap-break-word">
                   {item}
                 </h3>
 
-                <div className="relative mt-5 flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-black/40" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-black" />
+                {/* Bottom Pulse Indicator */}
+                <div className="relative mt-4 sm:mt-5 flex items-center gap-2">
+                  <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-black/30" />
+                    <span className="relative inline-flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-black" />
                   </span>
-                  <span className="text-xs font-semibold text-neutral-500">
+                  <span className="text-[11px] sm:text-xs font-semibold text-neutral-500 tracking-wide uppercase">
                     Actively learning
                   </span>
                 </div>
@@ -97,7 +101,8 @@ export function AboutFocus({ data }: AboutFocusProps) {
           })}
         </div>
 
-        <p className="mt-2 text-center font-mono text-xs text-neutral-400 sm:hidden">
+        {/* Swipe Helper Visibility Fix */}
+        <p className="mt-1 text-center font-mono text-[11px] text-neutral-400 sm:hidden select-none">
           swipe to see more →
         </p>
       </Container>

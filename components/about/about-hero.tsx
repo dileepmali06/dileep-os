@@ -31,22 +31,24 @@ export function AboutHero({
   return (
     <section className="section-padding">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-[320px_1fr] lg:items-center">
+        <div className="grid gap-8 sm:gap-10 lg:grid-cols-[280px_1fr] lg:items-center lg:gap-12 xl:grid-cols-[320px_1fr] xl:gap-14">
 
           {/* Profile Image */}
-          <div className="mx-auto w-full max-w-sm">
-            <Card className="overflow-hidden p-4">
-              <div className="relative aspect-square overflow-hidden rounded-2xl border-[3px] border-black bg-neutral-100">
+          <div className="mx-auto w-full max-w-60 sm:max-w-xs lg:max-w-none">
+            <Card className="overflow-hidden p-3 sm:p-4">
+              <div className="relative aspect-square overflow-hidden rounded-xl border-[3px] border-black bg-neutral-100 sm:rounded-2xl">
 
                 {data.profileImage ? (
                   <Image
                     src={urlFor(data.profileImage).url()}
                     alt={data.name}
                     fill
+                    sizes="(max-width: 640px) 240px, (max-width: 1024px) 320px, 320px"
                     className="object-cover"
+                    priority
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-neutral-400">
+                  <div className="flex h-full items-center justify-center px-2 text-center text-sm text-neutral-400 sm:text-base">
                     No Image
                   </div>
                 )}
@@ -56,49 +58,53 @@ export function AboutHero({
           </div>
 
           {/* Content */}
-          <div>
+          <div className="min-w-0 text-center lg:text-left">
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3 lg:justify-start">
 
               {data.openToWork && (
                 <Badge variant="success">
                   <CheckCircle
-                    size={14}
-                    className="mr-1"
+                    size={13}
+                    className="mr-1 shrink-0 sm:size-3.5"
                   />
-                  Open To Work
+                  <span className="whitespace-nowrap text-xs md:text-sm">Open To Work</span>
                 </Badge>
               )}
 
               {data.location && (
                 <Badge variant="outline">
                   <MapPin
-                    size={14}
-                    className="mr-1"
+                    size={13}
+                    className="mr-1 shrink-0 sm:size-3.5"
                   />
-                  {data.location}
+                  <span className="truncate text-xs md:text-sm">{data.location}</span>
                 </Badge>
               )}
 
             </div>
 
-            <h1 className="mt-6 font-heading text-5xl font-black leading-tight md:text-7xl">
+            {/* Name Heading */}
+            <h1 className="mt-5 wrap-break-word font-heading text-3xl font-black leading-tight sm:mt-6 sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl text-neutral-900">
               {data.name}
             </h1>
 
-            <div className="mt-4 inline-flex items-center gap-2.5 rounded-xl border-[2px] border-black bg-[var(--yellow)] px-4 py-2">
-              <Briefcase size={16} />
-              <span className="font-heading font-bold">{data.role}</span>
+            {/* Role Badge */}
+            <div className="mt-4 inline-flex items-center gap-2 rounded-xl border-2 border-black bg-(--yellow) px-3.5 py-1.5 sm:gap-2.5 sm:px-4 sm:py-2">
+              <Briefcase size={14} className="shrink-0 sm:size-4" />
+              <span className="font-heading text-xs font-bold sm:text-sm md:text-base">{data.role}</span>
             </div>
 
+            {/* Headline Sub-heading */}
             {data.headline && (
-              <h2 className="mt-8 max-w-3xl font-heading text-3xl font-bold leading-tight md:text-4xl">
+              <h2 className="mx-auto mt-6 max-w-2xl wrap-break-word font-heading text-lg font-bold leading-snug sm:mt-8 sm:text-xl md:text-2xl lg:mx-0 lg:max-w-3xl lg:leading-tight xl:text-3xl text-neutral-800">
                 {data.headline}
               </h2>
             )}
 
+            {/* Short Bio Paragraph */}
             {data.shortBio && (
-              <p className="mt-6 max-w-3xl text-lg leading-relaxed text-neutral-600">
+              <p className="mx-auto mt-4 max-w-xl text-start text-sm leading-relaxed text-neutral-600 sm:mt-6 sm:text-base lg:mx-0 lg:max-w-3xl">
                 {data.shortBio}
               </p>
             )}
