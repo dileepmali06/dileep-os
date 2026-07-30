@@ -23,7 +23,7 @@ export function AboutStory({ data }: AboutStoryProps) {
   return (
     <section className="section-padding pt-0">
       <Container>
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-2xl lg:max-w-3xl">
           <SectionHeading
             eyebrow="My Story"
             title="The Journey So Far"
@@ -36,18 +36,20 @@ export function AboutStory({ data }: AboutStoryProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative mt-16 pl-8 sm:pl-10"
+            className="relative mt-8 pl-5 sm:mt-12 sm:pl-8 md:mt-14 md:pl-10 lg:mt-16"
           >
             <Quote
-              size={64}
-              className="absolute -left-[34px] -top-2 -z-10 text-black/[0.06]"
+              size={32}
+              className="absolute -left-3 -top-1.5 -z-10 text-black/5 sm:-left-6 sm:size-12 md:-left-8 md:-top-2 md:size-14"
               strokeWidth={1.5}
             />
 
-            <PortableText
-              value={data.fullBio}
-              components={portableTextComponents}
-            />
+            <div className="prose-headings:font-heading prose-p:leading-relaxed max-w-none wrap-break-word text-sm sm:text-base lg:text-lg text-neutral-700">
+              <PortableText
+                value={data.fullBio}
+                components={portableTextComponents}
+              />
+            </div>
           </motion.div>
         </div>
       </Container>

@@ -54,7 +54,7 @@ export function CoreValuesSection({ data }: Props) {
           align="center"
         />
 
-        <div className="mx-auto mt-16 max-w-3xl">
+        <div className="mx-auto mt-10 sm:mt-14 lg:mt-16 max-w-3xl">
           {data.map((value, index) => {
             const Icon = getIcon(`${value.title} ${value.description}`);
             const isEven = index % 2 === 0;
@@ -66,12 +66,12 @@ export function CoreValuesSection({ data }: Props) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className={`relative overflow-hidden py-10 ${
+                className={`relative overflow-hidden py-8 sm:py-10 ${
                   index !== 0 ? "border-t-2 border-black/10" : ""
                 }`}
               >
                 <span
-                  className={`pointer-events-none absolute top-1/2 -translate-y-1/2 select-none font-heading text-[7rem] font-black leading-none text-black/[0.05] sm:text-[9rem] ${
+                  className={`pointer-events-none absolute top-1/2 -translate-y-1/2 select-none font-heading text-7xl sm:text-[7rem] md:text-[9rem] font-black leading-none text-black/4 ${
                     isEven ? "right-0" : "left-0"
                   }`}
                 >
@@ -79,24 +79,24 @@ export function CoreValuesSection({ data }: Props) {
                 </span>
 
                 <div
-                  className={`relative max-w-lg ${
-                    isEven ? "" : "ml-auto text-right"
+                  className={`relative max-w-xl ${
+                    isEven ? "mr-auto text-left" : "ml-auto text-left sm:text-right"
                   }`}
                 >
                   <div
                     className={`flex items-center gap-3 ${
-                      isEven ? "" : "flex-row-reverse"
+                      isEven ? "flex-row" : "flex-row sm:flex-row-reverse"
                     }`}
                   >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border-[3px] border-black bg-white">
-                      <Icon size={20} />
+                    <div className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl border-[2.5px] sm:border-[3px] border-black bg-white ">
+                      <Icon className="size-4.5 sm:size-5" />
                     </div>
-                    <h3 className="font-heading text-2xl font-black sm:text-3xl">
+                    <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-black text-neutral-900 wrap-break-word">
                       {value.title}
                     </h3>
                   </div>
 
-                  <p className="mt-4 leading-relaxed text-neutral-600">
+                  <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-neutral-600 wrap-break-word">
                     {value.description}
                   </p>
                 </div>
