@@ -9,7 +9,6 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 const icons = [Coffee, Code2, BookOpen, Rocket, Moon, Brain];
 const colors = ["var(--yellow)", "var(--blue)", "var(--pink)", "var(--green)"];
 
-// deterministic tilts so notes look hand-pinned, not randomly jittery on every render
 const tilts = [-4, 3, -2, 5, -3, 2, -5, 4];
 
 interface FunFact {
@@ -38,7 +37,7 @@ export function FunFacts({ data }: Props) {
         />
 
         <div
-          className="relative mt-16 overflow-hidden rounded-[28px] border-[4px] border-black p-8 sm:p-12"
+          className="relative mt-16 overflow-hidden rounded-[28px] border-4 border-black p-8 sm:p-12"
           style={{
             background: "#e8dcc8",
             backgroundImage:
@@ -64,22 +63,22 @@ export function FunFacts({ data }: Props) {
                 >
                   {/* pin */}
                   <span
-                    className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[2px] border-black"
+                    className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-black"
                     style={{ background: color }}
                   />
 
                   <div
-                    className="flex h-11 w-11 items-center justify-center rounded-lg border-[2px] border-black"
+                    className="flex h-11 w-11 items-center justify-center rounded-lg border-2 border-black"
                     style={{ background: color }}
                   >
                     <Icon size={20} />
                   </div>
 
-                  <h3 className="mt-4 font-heading text-lg font-black leading-tight">
+                  <h3 className="mt-4 font-heading text-base md:text-lg font-black leading-tight text-neutral-900 wrap-break-word">
                     {fact.title}
                   </h3>
 
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">
+                  <p className="mt-2 text-sm leading-relaxed text-neutral-600 wrap-break-word">
                     {fact.description}
                   </p>
                 </motion.div>
